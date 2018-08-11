@@ -72,9 +72,9 @@ public class PostListActivity extends AppCompatActivity {
             public void onItemClick(int position) {
                 PostListEntry postListEntry = mDatas.get(position);
 
-//                Intent intent = new Intent(PostListActivity.this, PostListActivity.class);
-//                intent.putExtra("post_url", postListEntry.getPost_url());
-//                startActivity(intent);
+                Intent intent = new Intent(PostListActivity.this, WebViewActivity.class);
+                intent.putExtra("post_url", postListEntry.getPost_url());
+                startActivity(intent);
             }
         });
 
