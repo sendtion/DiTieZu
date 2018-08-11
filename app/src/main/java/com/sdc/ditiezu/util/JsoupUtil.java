@@ -2,6 +2,7 @@ package com.sdc.ditiezu.util;
 
 import android.util.Log;
 
+import com.sdc.ditiezu.entry.PostListEntry;
 import com.sdc.ditiezu.entry.SubwayListEntry;
 
 import org.jsoup.Jsoup;
@@ -115,7 +116,7 @@ public class JsoupUtil {
         return null;
     }
 
-    public static List<String> getPostList(String url) {
+    public static List<PostListEntry> getPostList(String url) {
         try {
             Document doc = Jsoup.connect(url).userAgent("Mozilla").timeout(3000).get();
 
@@ -131,23 +132,53 @@ public class JsoupUtil {
             Elements tbodyElements = doc.select("tbody");
             Log.e("@@@", "tbody.size: " + tbodyElements.size());
             Log.e("@@@", "***************************************************");
-            List<SubwayListEntry> subwayListEntrys = new ArrayList<>();
+            List<PostListEntry> postListEntries = new ArrayList<>();
             for (Element tr : tbodyElements) {
-                SubwayListEntry subwayListEntry = new SubwayListEntry();
+                PostListEntry postListEntry = new PostListEntry();
                 //Log.e("@@@", "tr.text: " + tr.text());
-                Element postTitle = tr.selectFirst("tr > th");
-                if (postTitle != null){
-                    Log.e("@@@", "postTitle: " + postTitle.text());
-                    //subwayListEntry.setSubway_icon(img.absUrl("src"));
+                Element postTh = tr.selectFirst("tr > th");
+                if (postTh != null){
+                    Element postTitle = postTh.selectFirst("a.xst");
+                    if (postTitle != null){
+                        Log.e("@@@", "postTitle: " + postTitle.text() + ", " + postTitle.absUrl("href"));
+                        postListEntry.setPost_title(postTitle.text());
+                        postListEntry.setPost_url(postTitle.absUrl("href"));
+                    } else {
+                        continue;
+                    }
                 }
 
-                Element postIcon = tr.selectFirst("td.icn");
+                Element postIcon = tr.selectFirst("td.icn img");
                 if (postIcon != null){
-                    Log.e("@@@", "postIcon: " + postIcon.text());
-                    //subwayListEntry.setSubway_icon(img.absUrl("src"));
+                    Log.e("@@@", "postIcon: " + postIcon.absUrl("src"));
+                    postListEntry.setPost_icon(postIcon.absUrl("src"));
                 }
+
+                Element postCreator = tr.selectFirst("td.by");
+                if (postCreator != null){
+                    Log.e("@@@", "postCreator: " + postCreator.text());
+                    postListEntry.setPost_creator(postCreator.text());
+                }
+
+                Element postNum = tr.selectFirst("td.num");
+                if (postNum != null){
+                    Element postReply = postNum.selectFirst("a");
+                    Element postRead = postNum.selectFirst("em");
+                    if (postReply != null && postRead != null){
+                        Log.e("@@@", "postReply: " + postReply.text() + " / " + postRead.text());
+                        postListEntry.setReply_count(postReply.text() + " / " + postRead.text());
+                    }
+                }
+
+                Element postLast = tr.selectFirst("td.kmhf");
+                if (postLast != null){
+                    Log.e("@@@", "postLast: " + postLast.text());
+                    postListEntry.setLast_time(postLast.text());
+                }
+                postListEntries.add(postListEntry);
             }
 
+            return postListEntries;
         } catch (Exception e) {
             e.printStackTrace();
         }

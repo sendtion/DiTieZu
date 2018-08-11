@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <TextView
+        android:id="@+id/tv_post_list_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:maxLines="2"
+        android:text="[8号线] 中规院获北京南中轴地区规划国际方案竞赛第一名"
+        android:textColor="@color/color_6"
+        android:textSize="14sp" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp">
+
+        <TextView
+            android:id="@+id/tv_post_last_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="zhxinxi / 半小时前"
+            android:textColor="@color/color_9"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/tv_post_reply_read"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:text="6 / 474"
+            android:textColor="@color/color_9"
+            android:textSize="12sp" />
+    </RelativeLayout>
+</LinearLayout>

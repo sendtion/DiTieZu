@@ -6,8 +6,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
-import com.sdc.ditiezu.adapter.MySubwayListAdapter;
-import com.sdc.ditiezu.entry.SubwayListEntry;
+import com.sdc.ditiezu.adapter.MyPostListAdapter;
+import com.sdc.ditiezu.entry.PostListEntry;
 import com.sdc.ditiezu.util.JsoupUtil;
 
 import java.util.ArrayList;
@@ -16,32 +16,34 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-/**
- * 地铁族
- * http://www.ditiezu.com/forum.php?gid=2   都市地铁 列表
- */
-public class MainActivity extends AppCompatActivity {
+public class PostListActivity extends AppCompatActivity {
 
-    private String subwayUrl = "http://www.ditiezu.com/forum.php?gid=2";
+    private String subwayUrl;
+    private String subwayName;
 
-    @BindView(R.id.rv_list_subway)
-    RecyclerView mListSubway;
+    @BindView(R.id.rv_list_post)
+    RecyclerView mListPost;
 
-    private MySubwayListAdapter mAdapter;
-    private List<SubwayListEntry> mDatas;
+    private MyPostListAdapter mAdapter;
+    private List<PostListEntry> mDatas;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_post_list);
         ButterKnife.bind(this);
 
         initView();
 
+        Intent intent = getIntent();
+        subwayUrl = intent.getStringExtra("subway_url");
+        subwayName = intent.getStringExtra("subway_name");
+        setTitle(subwayName);
+
         new Thread(new Runnable() {
             @Override
             public void run() {
-                mDatas = JsoupUtil.getSubwayList(subwayUrl);
+                mDatas = JsoupUtil.getPostList(subwayUrl);
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
@@ -56,35 +58,31 @@ public class MainActivity extends AppCompatActivity {
     private void initView(){
         mDatas = new ArrayList<>();
 
-        setTitle("地铁族");
-
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        mListSubway.setLayoutManager(layoutManager);
+        mListPost.setLayoutManager(layoutManager);
         //mListArticle.addItemDecoration(new MyPaddingDecoration(this)); //设置分割线
 
-        mAdapter = new MySubwayListAdapter();
+        mAdapter = new MyPostListAdapter();
         mAdapter.setDatas(mDatas);
-        mListSubway.setAdapter(mAdapter);
+        mListPost.setAdapter(mAdapter);
 
-        mAdapter.setOnItemClickListener(new MySubwayListAdapter.OnItemClickListener() {
+        mAdapter.setOnItemClickListener(new MyPostListAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
-                SubwayListEntry subwayListEntry = mDatas.get(position);
+                PostListEntry postListEntry = mDatas.get(position);
 
-                Intent intent = new Intent(MainActivity.this, PostListActivity.class);
-                intent.putExtra("subway_url", subwayListEntry.getSubway_url());
-                intent.putExtra("subway_name", subwayListEntry.getSubway_name());
-                startActivity(intent);
+//                Intent intent = new Intent(PostListActivity.this, PostListActivity.class);
+//                intent.putExtra("post_url", postListEntry.getPost_url());
+//                startActivity(intent);
             }
         });
 
-        mAdapter.setOnItemLongClickListener(new MySubwayListAdapter.OnItemLongClickListener() {
+        mAdapter.setOnItemLongClickListener(new MyPostListAdapter.OnItemLongClickListener() {
             @Override
             public void onItemLongClick(int position) {
-                SubwayListEntry subwayListEntry = mDatas.get(position);
+                PostListEntry postListEntry = mDatas.get(position);
             }
         });
     }
-
 }
