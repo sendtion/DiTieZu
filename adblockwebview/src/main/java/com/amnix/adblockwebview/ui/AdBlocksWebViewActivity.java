@@ -101,7 +101,7 @@ public class AdBlocksWebViewActivity extends AppCompatActivity implements WebVie
         intent.putExtra(AdBlocksWebViewActivity.EXTRA_URL, URL);
         intent.putExtra(AdBlocksWebViewActivity.EXTRA_COLOR, toolbarColor);
         context.startActivity(intent);
-        context.overridePendingTransition(com.amnix.adblockwebview.R.anim.open_translate, com.amnix.adblockwebview.R.anim.close_scale);
+        //context.overridePendingTransition(com.amnix.adblockwebview.R.anim.open_translate, com.amnix.adblockwebview.R.anim.close_scale);
     }
 
     public static void startWebViewForResult(Activity context, @NonNull final String URL, @ColorInt final int toolbarColor, int requestCode) {
@@ -109,7 +109,7 @@ public class AdBlocksWebViewActivity extends AppCompatActivity implements WebVie
         intent.putExtra(AdBlocksWebViewActivity.EXTRA_URL, URL);
         intent.putExtra(AdBlocksWebViewActivity.EXTRA_COLOR, toolbarColor);
         context.startActivityForResult(intent, requestCode);
-        context.overridePendingTransition(com.amnix.adblockwebview.R.anim.open_translate, com.amnix.adblockwebview.R.anim.close_scale);
+        //context.overridePendingTransition(com.amnix.adblockwebview.R.anim.open_translate, com.amnix.adblockwebview.R.anim.close_scale);
     }
 
     @Override
@@ -282,7 +282,7 @@ public class AdBlocksWebViewActivity extends AppCompatActivity implements WebVie
     @Override
     public void finish() {
         super.finish();
-        overridePendingTransition(R.anim.open_scale, R.anim.close_translate);
+        //overridePendingTransition(R.anim.open_scale, R.anim.close_translate);
     }
 
     @Override
