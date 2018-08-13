@@ -58,8 +58,10 @@
 
             <TextView
                 android:id="@+id/tv_subway_moderator"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_toLeftOf="@+id/tv_subway_last_time"
                 android:text="版主: hat600, changeup"
                 android:textColor="@color/color_9"
                 android:textSize="12sp" />

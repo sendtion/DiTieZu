@@ -2,6 +2,7 @@ package com.sdc.ditiezu;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -26,6 +27,8 @@ public class MainActivity extends AppCompatActivity {
 
     @BindView(R.id.rv_list_subway)
     RecyclerView mListSubway;
+    @BindView(R.id.swipe_fresh_subway)
+    SwipeRefreshLayout swipeRefreshSubway;
 
     private MySubwayListAdapter mAdapter;
     private List<SubwayListEntry> mDatas;
@@ -38,19 +41,8 @@ public class MainActivity extends AppCompatActivity {
 
         initView();
 
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                mDatas = JsoupUtil.getSubwayList(subwayUrl);
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        mAdapter.setDatas(mDatas);
-                        mAdapter.notifyDataSetChanged();
-                    }
-                });
-            }
-        }).start();
+        swipeRefreshSubway.setRefreshing(true);
+        getSubwayListData();
     }
 
     private void initView(){
@@ -85,6 +77,30 @@ public class MainActivity extends AppCompatActivity {
                 SubwayListEntry subwayListEntry = mDatas.get(position);
             }
         });
+
+        swipeRefreshSubway.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                getSubwayListData();
+            }
+        });
+    }
+
+    private void getSubwayListData(){
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                mDatas = JsoupUtil.getSubwayList(subwayUrl);
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        swipeRefreshSubway.setRefreshing(false);
+                        mAdapter.setDatas(mDatas);
+                        mAdapter.notifyDataSetChanged();
+                    }
+                });
+            }
+        }).start();
     }
 
 }

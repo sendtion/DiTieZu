@@ -109,7 +109,7 @@ public class MySubwayListAdapter extends RecyclerView.Adapter<MySubwayListAdapte
                             sb.append(",");
                         }
                     }
-                    tv_subway_moderator.setText(sb.toString());
+                    tv_subway_moderator.setText("版主：" + sb.toString());
                 }
                 tv_subway_last_time.setText(subwayListEntry.getLast_time());
             }

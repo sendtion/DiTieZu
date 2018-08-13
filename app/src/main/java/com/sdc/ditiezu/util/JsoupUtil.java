@@ -14,13 +14,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Description:
+ * Description: 解析都市地铁
  * CreateTime: 2018/8/11 14:43
  * Author: ShengDecheng
  */
 
 public class JsoupUtil {
 
+    /**
+     * 解析地铁列表
+     * @param url
+     * @return
+     */
     public static List<SubwayListEntry> getSubwayList(String url) {
         try {
             Document doc = Jsoup.connect(url).userAgent("Mozilla").timeout(3000).get();
@@ -45,6 +50,8 @@ public class JsoupUtil {
                 if (img != null){
                     Log.e("@@@", "img: " + img.absUrl("src"));
                     subwayListEntry.setSubway_icon(img.absUrl("src"));
+                } else {
+                    continue;
                 }
                 if (tr.select("td") != null && tr.select("td").size() > 1) {
                     Element td = tr.select("td").get(1);
@@ -116,6 +123,11 @@ public class JsoupUtil {
         return null;
     }
 
+    /**
+     * 解析帖子列表
+     * @param url
+     * @return
+     */
     public static List<PostListEntry> getPostList(String url) {
         try {
             Document doc = Jsoup.connect(url).userAgent("Mozilla").timeout(3000).get();
@@ -146,6 +158,8 @@ public class JsoupUtil {
                     } else {
                         continue;
                     }
+                } else {
+                    continue;
                 }
 
                 Element postIcon = tr.selectFirst("td.icn img");

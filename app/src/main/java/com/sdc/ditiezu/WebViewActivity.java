@@ -1,6 +1,8 @@
 package com.sdc.ditiezu;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
@@ -13,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebChromeClient;
 import android.webkit.WebResourceRequest;
+import android.webkit.WebResourceResponse;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.RelativeLayout;
@@ -21,6 +24,7 @@ import com.prim.primweb.core.PrimWeb;
 import com.prim.primweb.core.webclient.webchromeclient.AgentChromeClient;
 import com.prim.primweb.core.webclient.webviewclient.AgentWebViewClient;
 import com.prim.primweb.core.webview.IAgentWebView;
+import com.sdc.ditiezu.util.ADFilterTool;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -70,7 +74,7 @@ public class WebViewActivity extends AppCompatActivity {
                     .useDefaultTopIndicator()
                     .setWebViewType(PrimWeb.WebViewType.X5)
                     .setWebChromeClient(agentChromeClient)
-                    .setWebViewClient(agentWebViewClient)
+                    .setWebViewClient(webViewClient)
                     .alwaysOpenOtherPage(false)
                     .buildWeb()
                     .lastGo()
@@ -116,7 +120,6 @@ public class WebViewActivity extends AppCompatActivity {
         return super.onKeyDown(keyCode, event);
     }
 
-
     AgentWebViewClient agentWebViewClient = new AgentWebViewClient() {
         @Override
         public boolean shouldOverrideUrlLoading(IAgentWebView view, String url) {
@@ -129,6 +132,14 @@ public class WebViewActivity extends AppCompatActivity {
         public boolean shouldOverrideUrlLoading(IAgentWebView view, WebResourceRequest request) {
             Log.e(TAG, "shouldOverrideUrlLoading: WebResourceRequest -->　" + request.getUrl());
             return super.shouldOverrideUrlLoading(view, request);
+        }
+
+        @Override
+        public void onPageFinished(IAgentWebView view, String url) {
+            super.onPageFinished(view, url);
+            String js = getClearAdDivJs(WebViewActivity.this);
+            Log.e("adJs", js);
+            view.loadAgentUrl(js);
         }
     };
 
@@ -145,7 +156,55 @@ public class WebViewActivity extends AppCompatActivity {
             Log.e(TAG, "shouldOverrideUrlLoading: android WebResourceRequest --> " + request.getUrl());
             return super.shouldOverrideUrlLoading(view, request);
         }
+
+        @Override
+        public void onPageFinished(WebView view, String url) {
+            super.onPageFinished(view, url);
+            // 注入js去除网页广告
+            String js = getClearAdDivJs(WebViewActivity.this);
+            Log.e("adJs", js);
+            view.loadUrl(js); //有点效果
+            //view.loadUrl("JavaScript:function setTop(){document.querySelector('ins.adsbygoogle').style.display=\"none\";}setTop();");
+        }
     };
+
+    /**
+     * 去除网页广告
+     */
+    public static String getClearAdDivJs(Context context){
+        String js = "javascript:";
+        Resources res = context.getResources();
+        String[] adDivs = res.getStringArray(R.array.adBlockDiv);
+        for(int i=0;i<adDivs.length;i++){
+
+            js += "var adDiv"+i+"= document.getElementsByClassName('"+adDivs[i]+"');if(adDiv"+i+" != null)adDiv"+i+".parentNode.removeChild(adDiv"+i+");";
+        }
+        return js;
+    }
+
+    class NoAdWebViewClient extends WebViewClient{
+        private  String homeurl;
+        private Context context;
+
+        public NoAdWebViewClient(Context context,String homeurl){
+            this.context= context;
+            this.homeurl= homeurl;
+        }
+
+        @Override
+        public WebResourceResponse shouldInterceptRequest(WebView view,String url){
+            url= url.toLowerCase();
+            if(!url.contains(homeurl)){
+                if(!ADFilterTool.hasAd(context,url)){
+                    return super.shouldInterceptRequest(view,url);
+                }else{
+                    return new WebResourceResponse(null,null,null);
+                }
+            }else{
+                return super.shouldInterceptRequest(view,url);
+            }
+        }
+    }
 
     com.tencent.smtt.sdk.WebViewClient x5WebViewClient = new com.tencent.smtt.sdk.WebViewClient() {
         @Override

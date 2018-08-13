@@ -6,9 +6,15 @@
     android:layout_height="match_parent"
     tools:context="com.sdc.ditiezu.MainActivity">
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/rv_list_subway"
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/swipe_fresh_subway"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_list_subway"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </android.support.v4.widget.SwipeRefreshLayout>
 
 </RelativeLayout>
