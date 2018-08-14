@@ -7,7 +7,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MenuItem;
@@ -33,7 +32,7 @@ import butterknife.ButterKnife;
  * 加载网页
  * https://github.com/JakePrim/PrimWeb
  */
-public class WebViewActivity extends AppCompatActivity {
+public class WebViewActivity extends BaseActivity {
 
     private static final String TAG = "@@@@@@";
 
@@ -95,13 +94,13 @@ public class WebViewActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onResume() {
+    public void onResume() {
         super.onResume();
         primWeb.webLifeCycle().onResume();
     }
 
     @Override
-    protected void onPause() {
+    public void onPause() {
         super.onPause();
         primWeb.webLifeCycle().onPause();
     }
