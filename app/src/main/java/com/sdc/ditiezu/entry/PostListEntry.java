@@ -11,7 +11,10 @@ import java.io.Serializable;
 public class PostListEntry implements Serializable {
 
     private String post_icon;
+    private String post_line;
     private String post_title;
+    private String is_has_img;
+    private String is_new_post;
     private String post_url;
     private String post_creator;
     private String reply_count;
@@ -26,12 +29,36 @@ public class PostListEntry implements Serializable {
         this.post_icon = post_icon;
     }
 
+    public String getPost_line() {
+        return post_line;
+    }
+
+    public void setPost_line(String post_line) {
+        this.post_line = post_line;
+    }
+
     public String getPost_title() {
         return post_title;
     }
 
     public void setPost_title(String post_title) {
         this.post_title = post_title;
+    }
+
+    public String getIs_has_img() {
+        return is_has_img;
+    }
+
+    public void setIs_has_img(String is_has_img) {
+        this.is_has_img = is_has_img;
+    }
+
+    public String getIs_new_post() {
+        return is_new_post;
+    }
+
+    public void setIs_new_post(String is_new_post) {
+        this.is_new_post = is_new_post;
     }
 
     public String getPost_url() {

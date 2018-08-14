@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
+    android:background="?attr/selectableItemBackground"
     android:padding="10dp">
 
     <TextView
@@ -25,7 +26,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="zhxinxi / 半小时前"
-            android:textColor="@color/color_9"
+            android:textColor="@color/color_b"
             android:textSize="12sp" />
 
         <TextView
@@ -35,7 +36,7 @@
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
             android:text="6 / 474"
-            android:textColor="@color/color_9"
+            android:textColor="@color/color_b"
             android:textSize="12sp" />
     </RelativeLayout>
 </LinearLayout>

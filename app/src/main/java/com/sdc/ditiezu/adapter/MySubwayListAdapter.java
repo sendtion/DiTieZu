@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.sdc.ditiezu.R;
 import com.sdc.ditiezu.entry.SubwayListEntry;
+import com.sdc.ditiezu.util.SpanUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -96,10 +97,13 @@ public class MySubwayListAdapter extends RecyclerView.Adapter<MySubwayListAdapte
 
             if (subwayListEntry != null) {
                 Glide.with(view.getContext()).load(subwayListEntry.getSubway_icon()).into(iv_subway_icon);
-                tv_subway_name.setText(subwayListEntry.getSubway_name());
+                SpanUtils spanUtils = new SpanUtils();
+                spanUtils.append(subwayListEntry.getSubway_name()).append(subwayListEntry.getToday_post())
+                        .setForegroundColor(view.getResources().getColor(R.color.color_f87d76));
+                tv_subway_name.setText(spanUtils.create());
                 tv_subway_count.setText(subwayListEntry.getPost_count());
                 tv_subway_desc.setText(subwayListEntry.getSubway_desc());
-                List<SubwayListEntry.Moderator> moderatorList = subwayListEntry.getModerators();
+                List<SubwayListEntry.Moderator> moderatorList = subwayListEntry.getModerators(); //版主
                 if (moderatorList != null) {
                     StringBuilder sb = new StringBuilder();
                     for (int i = 0; i < moderatorList.size(); i++) {

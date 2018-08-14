@@ -66,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
 
                 Intent intent = new Intent(MainActivity.this, PostListActivity.class);
                 intent.putExtra("subway_url", subwayListEntry.getSubway_url());
-                intent.putExtra("subway_name", subwayListEntry.getSubway_name());
+                intent.putExtra("subway_name", subwayListEntry.getSubway_name()+subwayListEntry.getToday_post());
                 startActivity(intent);
             }
         });

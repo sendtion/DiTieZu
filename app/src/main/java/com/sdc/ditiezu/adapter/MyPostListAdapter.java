@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import com.sdc.ditiezu.R;
 import com.sdc.ditiezu.entry.PostListEntry;
+import com.sdc.ditiezu.util.SpanUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -87,7 +88,29 @@ public class MyPostListAdapter extends RecyclerView.Adapter<MyPostListAdapter.Vi
             PostListEntry postListEntry = datas.get(position);
 
             if (postListEntry != null) {
-                tv_post_list_title.setText(postListEntry.getPost_title());
+                String line = postListEntry.getPost_line(); //线路
+                if (line != null) {
+                    line = "[" + line + "] ";
+                } else {
+                    line = "";
+                }
+                String isNewPost = postListEntry.getIs_new_post(); //是否新帖
+                if (isNewPost == null){
+                    isNewPost = "";
+                } else {
+                    isNewPost = " " + isNewPost;
+                }
+
+                SpanUtils spanUtils = new SpanUtils();
+                spanUtils = spanUtils.append(line).append(postListEntry.getPost_title());
+
+                String isHasImg = postListEntry.getIs_has_img(); //是否有图片
+                if (isHasImg != null){
+                    spanUtils = spanUtils.appendImage(R.drawable.image_s);
+                }
+                spanUtils.append(isNewPost).setForegroundColor(view.getResources().getColor(R.color.color_f87d76));
+                //tv_post_list_title.setText(line + postListEntry.getPost_title() + " " + isNewPost);
+                tv_post_list_title.setText(spanUtils.create());
                 tv_post_last_time.setText(postListEntry.getLast_time());
                 tv_post_reply_read.setText(postListEntry.getReply_count());
             }

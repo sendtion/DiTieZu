@@ -1,7 +1,5 @@
 package com.sdc.ditiezu.util;
 
-import android.util.Log;
-
 import com.sdc.ditiezu.entry.PostListEntry;
 import com.sdc.ditiezu.entry.SubwayListEntry;
 
@@ -38,17 +36,17 @@ public class JsoupUtil {
 //                    .post();
 
             String title = doc.title();
-            Log.e("@@@@", "initData: " + title );
+            //Log.e("@@@@", "initData: " + title );
             Elements trElements = doc.select("div#category_2 tr");
-            Log.e("@@@", "tr.size: " + trElements.size());
-            Log.e("@@@", "***************************************************");
+            //Log.e("@@@", "tr.size: " + trElements.size());
+            //Log.e("@@@", "***************************************************");
             List<SubwayListEntry> subwayListEntrys = new ArrayList<>();
             for (Element tr : trElements) {
                 SubwayListEntry subwayListEntry = new SubwayListEntry();
                 //Log.e("@@@", "tr.text: " + tr.text());
                 Element img = tr.selectFirst("td.fl_icn img");
                 if (img != null){
-                    Log.e("@@@", "img: " + img.absUrl("src"));
+                    //Log.e("@@@", "img: " + img.absUrl("src"));
                     subwayListEntry.setSubway_icon(img.absUrl("src"));
                 } else {
                     continue;
@@ -61,10 +59,10 @@ public class JsoupUtil {
                             String result = name.text();
                             Element post = td.select("h2 > em").first();
                             if (post != null){
-                                result += post.text();
+                                //result += post.text();
                                 subwayListEntry.setToday_post(post.text());
                             }
-                            Log.e("@@@", "name: " + name.absUrl("href") + ", " + result);
+                            //Log.e("@@@", "name: " + name.absUrl("href") + ", " + result);
                             subwayListEntry.setSubway_name(result);
                             subwayListEntry.setSubway_url(name.absUrl("href"));
                         } else {
@@ -73,7 +71,7 @@ public class JsoupUtil {
 
                         Element desc = td.select("p.xg2").first();
                         if (desc != null) {
-                            Log.e("@@@", "desc: " + desc.text());
+                            //Log.e("@@@", "desc: " + desc.text());
                             subwayListEntry.setSubway_desc(desc.text());
                         }
 
@@ -82,7 +80,7 @@ public class JsoupUtil {
                             List<SubwayListEntry.Moderator> moderatorList = new ArrayList<>();
                             for (Element element : moderators) {
                                 if (element != null){
-                                    Log.e("@@@", "moderator: " + element.absUrl("href") + ", " + element.text());
+                                    //Log.e("@@@", "moderator: " + element.absUrl("href") + ", " + element.text());
                                     SubwayListEntry.Moderator moderator = new SubwayListEntry.Moderator();
                                     moderator.setName(element.text());
                                     moderator.setUrl(element.absUrl("href"));
@@ -98,7 +96,7 @@ public class JsoupUtil {
                     Element post1 = tr.select("td.fl_i span.xi2").first();
                     Element post2 = tr.select("td.fl_i span.xg1").first();
                     if (post1 != null && post2 != null) {
-                        Log.e("@@@", "post: " + post1.text() + " " + post2.text());
+                        //Log.e("@@@", "post: " + post1.text() + " " + post2.text());
                         subwayListEntry.setPost_count(post1.text() + " " + post2.text());
                     }
                 }
@@ -108,7 +106,7 @@ public class JsoupUtil {
                     Element newPost = news.select("div > a").first();
                     Element newTime = news.select("div > cite").first();
                     if (newPost != null && newTime != null) {
-                        Log.e("@@@", "news: " + newPost.text() + " " + newTime.text());
+                        //Log.e("@@@", "news: " + newPost.text() + " " + newTime.text());
                         subwayListEntry.setLast_post(newPost.text());
                         subwayListEntry.setLast_time(newTime.text());
                     }
@@ -140,21 +138,33 @@ public class JsoupUtil {
 //                    .post();
 
             String title = doc.title();
-            Log.e("@@@@", "initData: " + title );
+            //Log.e("@@@@", "initData: " + title );
             Elements tbodyElements = doc.select("tbody");
-            Log.e("@@@", "tbody.size: " + tbodyElements.size());
-            Log.e("@@@", "***************************************************");
+            //Log.e("@@@", "tbody.size: " + tbodyElements.size());
+            //Log.e("@@@", "***************************************************");
             List<PostListEntry> postListEntries = new ArrayList<>();
             for (Element tr : tbodyElements) {
                 PostListEntry postListEntry = new PostListEntry();
                 //Log.e("@@@", "tr.text: " + tr.text());
                 Element postTh = tr.selectFirst("tr > th");
                 if (postTh != null){
-                    Element postTitle = postTh.selectFirst("a.xst");
+                    Element postLine = postTh.selectFirst("em a"); //线路
+                    Element postImg = postTh.selectFirst("img"); //图片附件
+                    Element postNew = postTh.selectFirst("a.xi1"); //是否新帖
+                    Element postTitle = postTh.selectFirst("a.xst"); //标题
                     if (postTitle != null){
-                        Log.e("@@@", "postTitle: " + postTitle.text() + ", " + postTitle.absUrl("href"));
+                        //Log.e("@@@", "postTitle: " + postTitle.text() + ", " + postTitle.absUrl("href"));
                         postListEntry.setPost_title(postTitle.text());
                         postListEntry.setPost_url(postTitle.absUrl("href"));
+                        if (postLine != null) {
+                            postListEntry.setPost_line(postLine.text());
+                        }
+                        if (postImg != null){
+                            postListEntry.setIs_has_img(postImg.absUrl("src"));
+                        }
+                        if (postNew != null){
+                            postListEntry.setIs_new_post(postNew.text());
+                        }
                     } else {
                         continue;
                     }
@@ -164,13 +174,13 @@ public class JsoupUtil {
 
                 Element postIcon = tr.selectFirst("td.icn img");
                 if (postIcon != null){
-                    Log.e("@@@", "postIcon: " + postIcon.absUrl("src"));
+                    //Log.e("@@@", "postIcon: " + postIcon.absUrl("src"));
                     postListEntry.setPost_icon(postIcon.absUrl("src"));
                 }
 
                 Element postCreator = tr.selectFirst("td.by");
                 if (postCreator != null){
-                    Log.e("@@@", "postCreator: " + postCreator.text());
+                    //Log.e("@@@", "postCreator: " + postCreator.text());
                     postListEntry.setPost_creator(postCreator.text());
                 }
 
@@ -179,14 +189,14 @@ public class JsoupUtil {
                     Element postReply = postNum.selectFirst("a");
                     Element postRead = postNum.selectFirst("em");
                     if (postReply != null && postRead != null){
-                        Log.e("@@@", "postReply: " + postReply.text() + " / " + postRead.text());
+                        //Log.e("@@@", "postReply: " + postReply.text() + " / " + postRead.text());
                         postListEntry.setReply_count(postReply.text() + " / " + postRead.text());
                     }
                 }
 
                 Element postLast = tr.selectFirst("td.kmhf");
                 if (postLast != null){
-                    Log.e("@@@", "postLast: " + postLast.text());
+                    //Log.e("@@@", "postLast: " + postLast.text());
                     postListEntry.setLast_time(postLast.text());
                 }
                 postListEntries.add(postListEntry);

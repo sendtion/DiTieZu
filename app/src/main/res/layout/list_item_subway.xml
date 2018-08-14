@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
+    android:background="?attr/selectableItemBackground"
     android:padding="10dp">
 
     <ImageView
@@ -25,6 +26,7 @@
                 android:id="@+id/tv_subway_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textStyle="bold"
                 android:text="北京区(190)"
                 android:textColor="@color/color_6"
                 android:textSize="14sp" />
@@ -36,8 +38,8 @@
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
                 android:text="82344 / 2014336"
-                android:textColor="@color/color_6"
-                android:textSize="14sp" />
+                android:textColor="@color/color_79"
+                android:textSize="13sp" />
         </RelativeLayout>
 
         <TextView
@@ -48,7 +50,7 @@
             android:ellipsize="end"
             android:maxLines="2"
             android:text="地下通衢肇始燕，铁流暗涌古城垣。北畅南达东西贯，京都旧貌换新颜。"
-            android:textColor="@color/color_9"
+            android:textColor="@color/color_a"
             android:textSize="12sp" />
 
         <RelativeLayout
@@ -63,7 +65,7 @@
                 android:layout_alignParentLeft="true"
                 android:layout_toLeftOf="@+id/tv_subway_last_time"
                 android:text="版主: hat600, changeup"
-                android:textColor="@color/color_9"
+                android:textColor="@color/color_a"
                 android:textSize="12sp" />
 
             <TextView
@@ -73,7 +75,7 @@
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
                 android:text="1 分钟前 北京地铁九号线"
-                android:textColor="@color/color_9"
+                android:textColor="@color/color_a"
                 android:textSize="12sp" />
         </RelativeLayout>
     </LinearLayout>
