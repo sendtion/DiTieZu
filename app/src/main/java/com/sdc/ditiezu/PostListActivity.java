@@ -1,14 +1,18 @@
 package com.sdc.ditiezu;
 
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
 
 import com.amnix.adblockwebview.ui.AdBlocksWebViewActivity;
+import com.jcodecraeer.xrecyclerview.ProgressStyle;
+import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.sdc.ditiezu.adapter.MyPostListAdapter;
 import com.sdc.ditiezu.entry.PostListEntry;
 import com.sdc.ditiezu.util.JsoupUtil;
@@ -19,13 +23,13 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class PostListActivity extends BaseActivity {
+public class PostListActivity extends BaseActivity implements XRecyclerView.LoadingListener {
 
     private String subwayUrl;
     private String subwayName;
 
     @BindView(R.id.rv_list_post)
-    RecyclerView mListPost;
+    XRecyclerView mListPost;
     @BindView(R.id.swipe_fresh_post)
     SwipeRefreshLayout swipeRefreshPost;
 
@@ -43,7 +47,7 @@ public class PostListActivity extends BaseActivity {
         initView();
 
         swipeRefreshPost.setRefreshing(true);
-        getPostListData();
+        refreshPostListData();
     }
 
     private void initView(){
@@ -66,7 +70,12 @@ public class PostListActivity extends BaseActivity {
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         mListPost.setLayoutManager(layoutManager);
-        //mListArticle.addItemDecoration(new MyPaddingDecoration(this)); //设置分割线
+        DividerItemDecoration itemDecoration = new DividerItemDecoration(this, DividerItemDecoration.VERTICAL);
+        itemDecoration.setDrawable(new ColorDrawable(ContextCompat.getColor(this,R.color.color_d)));
+        mListPost.addItemDecoration(itemDecoration); //设置分割线
+        mListPost.setLoadingMoreProgressStyle(ProgressStyle.BallSpinFadeLoader);
+        mListPost.setPullRefreshEnabled(false);
+        mListPost.setLoadingListener(this);
 
         mAdapter = new MyPostListAdapter();
         mAdapter.setDatas(mDatas);
@@ -97,12 +106,12 @@ public class PostListActivity extends BaseActivity {
         swipeRefreshPost.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                getPostListData();
+                refreshPostListData();
             }
         });
     }
 
-    private void getPostListData(){
+    private void refreshPostListData(){
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -110,7 +119,26 @@ public class PostListActivity extends BaseActivity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
+                        //mListPost.refreshComplete();
                         swipeRefreshPost.setRefreshing(false);
+                        mAdapter.setDatas(mDatas);
+                        mAdapter.notifyDataSetChanged();
+                    }
+                });
+            }
+        }).start();
+    }
+
+    private void loadPostListData(){
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                mDatas = JsoupUtil.getPostList(subwayUrl);
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        mListPost.loadMoreComplete();
+                        //swipeRefreshPost.setRefreshing(false);
                         mAdapter.setDatas(mDatas);
                         mAdapter.notifyDataSetChanged();
                     }
@@ -127,5 +155,24 @@ public class PostListActivity extends BaseActivity {
                 break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onRefresh() {
+
+    }
+
+    @Override
+    public void onLoadMore() {
+        loadPostListData();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if(mListPost != null){
+            mListPost.destroy(); // this will totally release XR's memory
+            mListPost = null;
+        }
     }
 }

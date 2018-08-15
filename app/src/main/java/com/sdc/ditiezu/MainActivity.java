@@ -1,8 +1,11 @@
 package com.sdc.ditiezu;
 
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
@@ -52,7 +55,9 @@ public class MainActivity extends BaseActivity {
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         mListSubway.setLayoutManager(layoutManager);
-        //mListArticle.addItemDecoration(new MyPaddingDecoration(this)); //设置分割线
+        DividerItemDecoration itemDecoration = new DividerItemDecoration(this, DividerItemDecoration.VERTICAL);
+        itemDecoration.setDrawable(new ColorDrawable(ContextCompat.getColor(this,R.color.color_d)));
+        mListSubway.addItemDecoration(itemDecoration); //设置分割线
 
         mAdapter = new MySubwayListAdapter();
         mAdapter.setDatas(mDatas);

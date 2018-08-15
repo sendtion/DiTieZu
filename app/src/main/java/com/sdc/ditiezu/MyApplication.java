@@ -38,7 +38,7 @@ public class MyApplication extends Application {
          * 设置组件化的Log开关
          * 参数: boolean 默认为false，如需查看LOG设置为true
          */
-        UMConfigure.setLogEnabled(true);
+        UMConfigure.setLogEnabled(false);
         /**
          * 设置日志加密
          * 参数：boolean 默认为false（不加密）
