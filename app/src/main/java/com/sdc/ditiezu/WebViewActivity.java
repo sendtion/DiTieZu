@@ -157,6 +157,16 @@ public class WebViewActivity extends BaseActivity {
         }
 
         @Override
+        public WebResourceResponse shouldInterceptRequest(WebView view, String url){
+            url= url.toLowerCase();
+            if(!ADFilterTool.hasAd(view.getContext(),url)){
+                return super.shouldInterceptRequest(view,url);
+            }else{
+                return new WebResourceResponse(null,null,null);
+            }
+        }
+
+        @Override
         public void onPageFinished(WebView view, String url) {
             super.onPageFinished(view, url);
             // 注入js去除网页广告
@@ -180,30 +190,6 @@ public class WebViewActivity extends BaseActivity {
         return js;
     }
 
-    class NoAdWebViewClient extends WebViewClient{
-        private  String homeurl;
-        private Context context;
-
-        public NoAdWebViewClient(Context context,String homeurl){
-            this.context= context;
-            this.homeurl= homeurl;
-        }
-
-        @Override
-        public WebResourceResponse shouldInterceptRequest(WebView view,String url){
-            url= url.toLowerCase();
-            if(!url.contains(homeurl)){
-                if(!ADFilterTool.hasAd(context,url)){
-                    return super.shouldInterceptRequest(view,url);
-                }else{
-                    return new WebResourceResponse(null,null,null);
-                }
-            }else{
-                return super.shouldInterceptRequest(view,url);
-            }
-        }
-    }
-
     com.tencent.smtt.sdk.WebViewClient x5WebViewClient = new com.tencent.smtt.sdk.WebViewClient() {
         @Override
         public boolean shouldOverrideUrlLoading(com.tencent.smtt.sdk.WebView webView, String s) {
@@ -216,6 +202,17 @@ public class WebViewActivity extends BaseActivity {
             Log.e(TAG, "shouldOverrideUrlLoading: x5 webResourceRequest --> " + webResourceRequest.getUrl());
             return super.shouldOverrideUrlLoading(webView, webResourceRequest);
         }
+
+        @Override
+        public com.tencent.smtt.export.external.interfaces.WebResourceResponse shouldInterceptRequest(com.tencent.smtt.sdk.WebView webView, String url) {
+            //做广告拦截，ADFIlterTool 为广告拦截工具类
+            if (!ADFilterTool.hasAd(webView.getContext(),url)){
+                return super.shouldInterceptRequest(webView, url);
+            }else {
+                return new com.tencent.smtt.export.external.interfaces.WebResourceResponse(null, null, null);
+            }
+        }
+
     };
 
     WebChromeClient webChromeClient = new WebChromeClient() {

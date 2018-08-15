@@ -5,19 +5,22 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
 
     <application
         android:name=".MyApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <meta-data android:value="5b724919f29d980b0d000057" android:name="UMENG_APPKEY"/>
-        <meta-data android:value="bmob" android:name="UMENG_CHANNEL"/>
+        <meta-data
+            android:name="UMENG_APPKEY"
+            android:value="5b724919f29d980b0d000057" />
+        <meta-data
+            android:name="UMENG_CHANNEL"
+            android:value="bmob" />
 
         <activity android:name=".MainActivity">
             <intent-filter>
