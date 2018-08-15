@@ -4,6 +4,6 @@
     android:id="@+id/layout_web"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.sdc.ditiezu.WebViewActivity">
+    tools:context=".WebViewActivity">
 
 </RelativeLayout>

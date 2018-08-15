@@ -1,8 +1,8 @@
-package com.sdc.ditiezu;
+package com.sendtion.ditiezu;
 
 import android.app.Application;
 
-import com.sdc.ditiezu.util.Utils;
+import com.sendtion.ditiezu.util.Utils;
 import com.umeng.analytics.MobclickAgent;
 import com.umeng.commonsdk.UMConfigure;
 

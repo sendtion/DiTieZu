@@ -1,4 +1,4 @@
-package com.sdc.ditiezu;
+package com.sendtion.ditiezu;
 
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
@@ -9,9 +9,9 @@ import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
-import com.sdc.ditiezu.adapter.MySubwayListAdapter;
-import com.sdc.ditiezu.entry.SubwayListEntry;
-import com.sdc.ditiezu.util.JsoupUtil;
+import com.sendtion.ditiezu.adapter.MySubwayListAdapter;
+import com.sendtion.ditiezu.entry.SubwayListEntry;
+import com.sendtion.ditiezu.util.JsoupUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -78,7 +78,7 @@ public class MainActivity extends BaseActivity {
         mAdapter.setOnItemLongClickListener(new MySubwayListAdapter.OnItemLongClickListener() {
             @Override
             public void onItemLongClick(int position) {
-                SubwayListEntry subwayListEntry = mDatas.get(position);
+                //SubwayListEntry subwayListEntry = mDatas.get(position);
             }
         });
 

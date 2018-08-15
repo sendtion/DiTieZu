@@ -1,4 +1,4 @@
-package com.sdc.ditiezu.adapter;
+package com.sendtion.ditiezu.adapter;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -6,9 +6,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.sdc.ditiezu.R;
-import com.sdc.ditiezu.entry.PostListEntry;
-import com.sdc.ditiezu.util.SpanUtils;
+import com.sendtion.ditiezu.R;
+import com.sendtion.ditiezu.entry.PostListEntry;
+import com.sendtion.ditiezu.util.SpanUtils;
 
 import java.util.ArrayList;
 import java.util.List;

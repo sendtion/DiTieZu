@@ -1,4 +1,4 @@
-package com.sdc.ditiezu;
+package com.sendtion.ditiezu;
 
 import android.os.Bundle;
 import android.os.PersistableBundle;

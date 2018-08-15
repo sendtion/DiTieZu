@@ -1,4 +1,4 @@
-package com.sdc.ditiezu;
+package com.sendtion.ditiezu;
 
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
@@ -13,20 +13,22 @@ import android.view.MenuItem;
 import com.amnix.adblockwebview.ui.AdBlocksWebViewActivity;
 import com.jcodecraeer.xrecyclerview.ProgressStyle;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
-import com.sdc.ditiezu.adapter.MyPostListAdapter;
-import com.sdc.ditiezu.entry.PostListEntry;
-import com.sdc.ditiezu.util.JsoupUtil;
+import com.sendtion.ditiezu.adapter.MyPostListAdapter;
+import com.sendtion.ditiezu.entry.PostListEntry;
+import com.sendtion.ditiezu.util.JsoupUtil;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import es.dmoral.toasty.Toasty;
 
 public class PostListActivity extends BaseActivity implements XRecyclerView.LoadingListener {
 
+    private static final String SUFFIX = ".html";
+    private String baseUrl;
     private String subwayUrl;
-    private String subwayName;
 
     @BindView(R.id.rv_list_post)
     XRecyclerView mListPost;
@@ -35,6 +37,7 @@ public class PostListActivity extends BaseActivity implements XRecyclerView.Load
 
     private MyPostListAdapter mAdapter;
     private List<PostListEntry> mDatas;
+    private int page = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,8 +65,15 @@ public class PostListActivity extends BaseActivity implements XRecyclerView.Load
 
         Intent intent = getIntent();
         subwayUrl = intent.getStringExtra("subway_url");
-        subwayName = intent.getStringExtra("subway_name");
+        String subwayName = intent.getStringExtra("subway_name");
         setTitle(subwayName);
+
+        //http://www.ditiezu.com/forum-64-1.html
+        String currentPage = subwayUrl.substring(subwayUrl.lastIndexOf("-")+1, subwayUrl.indexOf(SUFFIX));
+        //Log.e("@@@", "currentPage: " + currentPage );
+        //Log.e("@@@", "url: " +  subwayUrl.substring(0, subwayUrl.lastIndexOf("-")+1));
+        baseUrl = subwayUrl.substring(0, subwayUrl.lastIndexOf("-")+1);
+        page = Integer.valueOf(currentPage);
 
         mDatas = new ArrayList<>();
 
@@ -88,7 +98,7 @@ public class PostListActivity extends BaseActivity implements XRecyclerView.Load
 
                 // AdBlock去广告
                 AdBlocksWebViewActivity.startWebView(PostListActivity.this, postListEntry.getPost_url(),
-                        getResources().getColor(R.color.colorPrimary));
+                        ContextCompat.getColor(PostListActivity.this, R.color.colorPrimary));
             }
         });
 
@@ -133,16 +143,24 @@ public class PostListActivity extends BaseActivity implements XRecyclerView.Load
         new Thread(new Runnable() {
             @Override
             public void run() {
-                mDatas = JsoupUtil.getPostList(subwayUrl);
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        mListPost.loadMoreComplete();
-                        //swipeRefreshPost.setRefreshing(false);
-                        mAdapter.setDatas(mDatas);
-                        mAdapter.notifyDataSetChanged();
-                    }
-                });
+                String postUrl = baseUrl + ++page + SUFFIX;
+                //Log.e("@@@", "postUrl: " + postUrl );
+                final List<PostListEntry> dataList = JsoupUtil.getPostList(postUrl);
+                if (dataList != null) {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            mListPost.loadMoreComplete();
+                            //swipeRefreshPost.setRefreshing(false);
+                            mDatas.addAll(dataList);
+                            mAdapter.setDatas(mDatas);
+                            mAdapter.notifyDataSetChanged();
+                        }
+                    });
+                } else {
+                    Toasty.normal(PostListActivity.this, "没有更多数据了").show();
+                    mListPost.loadMoreComplete();
+                }
             }
         }).start();
     }

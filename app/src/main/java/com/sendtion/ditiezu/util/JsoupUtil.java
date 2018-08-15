@@ -1,7 +1,8 @@
-package com.sdc.ditiezu.util;
+package com.sendtion.ditiezu.util;
 
-import com.sdc.ditiezu.entry.PostListEntry;
-import com.sdc.ditiezu.entry.SubwayListEntry;
+
+import com.sendtion.ditiezu.entry.PostListEntry;
+import com.sendtion.ditiezu.entry.SubwayListEntry;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;

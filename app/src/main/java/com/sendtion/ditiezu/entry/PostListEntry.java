@@ -1,4 +1,4 @@
-package com.sdc.ditiezu.entry;
+package com.sendtion.ditiezu.entry;
 
 import java.io.Serializable;
 

@@ -1,4 +1,4 @@
-package com.sdc.ditiezu.util;
+package com.sendtion.ditiezu.util;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;

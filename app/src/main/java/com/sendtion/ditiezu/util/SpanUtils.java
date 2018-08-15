@@ -1,4 +1,4 @@
-package com.sdc.ditiezu.util;
+package com.sendtion.ditiezu.util;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -891,7 +891,7 @@ public final class SpanUtils {
     }
 
     private void updateCharCharSequence() {
-        if (mText.length() == 0) return;
+        if (mText != null && mText.length() == 0) return;
         int start = mBuilder.length();
         mBuilder.append(mText);
         int end = mBuilder.length();

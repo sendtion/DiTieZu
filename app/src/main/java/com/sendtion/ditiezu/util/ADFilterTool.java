@@ -1,9 +1,10 @@
-package com.sdc.ditiezu.util;
+package com.sendtion.ditiezu.util;
 
 import android.content.Context;
 import android.content.res.Resources;
 
-import com.sdc.ditiezu.R;
+import com.sendtion.ditiezu.R;
+
 
 /**
  * Description:
