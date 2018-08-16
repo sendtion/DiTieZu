@@ -27,7 +27,7 @@ public class JsoupUtil {
      */
     public static List<SubwayListEntry> getSubwayList(String url) {
         try {
-            Document doc = Jsoup.connect(url).userAgent("Mozilla").timeout(3000).get();
+            Document doc = Jsoup.connect(url).userAgent("Mozilla").timeout(6000).get();
 
 //            doc = Jsoup.connect("http://example.com")
 //                    .data("query", "Java")
@@ -105,11 +105,22 @@ public class JsoupUtil {
                 Element news = tr.select("td.fl_by").first();
                 if (news != null) {
                     Element newPost = news.select("div > a").first();
-                    Element newTime = news.select("div > cite").first();
-                    if (newPost != null && newTime != null) {
-                        //Log.e("@@@", "news: " + newPost.text() + " " + newTime.text());
-                        subwayListEntry.setLast_post(newPost.text());
-                        subwayListEntry.setLast_time(newTime.text());
+                    if (newPost != null){
+                        subwayListEntry.setLast_post(newPost.text()); //最后发布的帖子
+                    }
+                    Element newOper = news.select("div > cite").first();
+                    if (newOper != null) {
+                        Element lastTime = newOper.selectFirst("span");
+                        if (lastTime != null){
+                            subwayListEntry.setLast_time(lastTime.text()); //最后发布时间
+                            subwayListEntry.setLast_time2(lastTime.attr("title"));
+                            //Log.e("@@@", "lastTime: " + lastTime.text());
+                        }
+                        Element lastUser = newOper.selectFirst("a");
+                        if (lastUser != null){
+                            subwayListEntry.setLast_user(lastUser.text()); //最后发布人
+                            //Log.e("@@@", "lastUser: " + lastUser.text());
+                        }
                     }
                 }
                 subwayListEntrys.add(subwayListEntry);
@@ -129,7 +140,7 @@ public class JsoupUtil {
      */
     public static List<PostListEntry> getPostList(String url) {
         try {
-            Document doc = Jsoup.connect(url).userAgent("Mozilla").timeout(3000).get();
+            Document doc = Jsoup.connect(url).userAgent("Mozilla").timeout(6000).get();
 
 //            doc = Jsoup.connect("http://example.com")
 //                    .data("query", "Java")
@@ -198,7 +209,25 @@ public class JsoupUtil {
                 Element postLast = tr.selectFirst("td.kmhf");
                 if (postLast != null){
                     //Log.e("@@@", "postLast: " + postLast.text());
-                    postListEntry.setLast_time(postLast.text());
+                    //postListEntry.setLast_time(postLast.text());
+                    Element lastUser = postLast.selectFirst("cite > a");
+                    if (lastUser != null){
+                        postListEntry.setLast_user(lastUser.text());
+                        //Log.e("@@@", "lastUser: " + lastUser.text());
+                    }
+                    Element lastTime = postLast.selectFirst("em span");
+                    if (lastTime != null){
+                        postListEntry.setLast_time(lastTime.text());
+                        postListEntry.setLast_time2(lastTime.attr("title"));
+                        //Log.e("@@@", "lastTime: " + lastTime.text());
+                        //Log.e("@@@", "lastTime2: " + lastTime.attr("title"));
+                    } else {
+                        lastTime = postLast.selectFirst("em > a");
+                        if (lastTime != null){
+                            postListEntry.setLast_time(lastTime.text());
+                            postListEntry.setLast_time2(lastTime.text());
+                        }
+                    }
                 }
                 postListEntries.add(postListEntry);
             }

@@ -1,4 +1,4 @@
-package com.sendtion.ditiezu;
+package com.sendtion.ditiezu.ui;
 
 import android.os.Bundle;
 import android.os.PersistableBundle;

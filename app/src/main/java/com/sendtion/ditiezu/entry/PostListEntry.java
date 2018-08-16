@@ -19,6 +19,7 @@ public class PostListEntry implements Serializable {
     private String post_creator;
     private String reply_count;
     private String last_time;
+    private String last_time2;
     private String last_user;
 
     public String getPost_icon() {
@@ -91,6 +92,14 @@ public class PostListEntry implements Serializable {
 
     public void setLast_time(String last_time) {
         this.last_time = last_time;
+    }
+
+    public String getLast_time2() {
+        return last_time2;
+    }
+
+    public void setLast_time2(String last_time2) {
+        this.last_time2 = last_time2;
     }
 
     public String getLast_user() {

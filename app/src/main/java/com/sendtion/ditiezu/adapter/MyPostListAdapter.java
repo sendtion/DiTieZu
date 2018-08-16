@@ -73,6 +73,7 @@ public class MyPostListAdapter extends RecyclerView.Adapter<MyPostListAdapter.Vi
         private View view;
         private TextView tv_post_list_title;
         private TextView tv_post_last_time;
+        private TextView tv_post_last_user;
         private TextView tv_post_reply_read;
 
         public ViewHolder(View itemView) {
@@ -81,6 +82,7 @@ public class MyPostListAdapter extends RecyclerView.Adapter<MyPostListAdapter.Vi
 
             tv_post_list_title = (TextView) itemView.findViewById(R.id.tv_post_list_title);
             tv_post_last_time = (TextView) itemView.findViewById(R.id.tv_post_last_time);
+            tv_post_last_user = (TextView) itemView.findViewById(R.id.tv_post_last_user);
             tv_post_reply_read = (TextView) itemView.findViewById(R.id.tv_post_reply_read);
         }
 
@@ -108,10 +110,11 @@ public class MyPostListAdapter extends RecyclerView.Adapter<MyPostListAdapter.Vi
                 if (isHasImg != null){
                     spanUtils = spanUtils.appendImage(R.drawable.image_s);
                 }
-                spanUtils.append(isNewPost).setForegroundColor(view.getResources().getColor(R.color.color_f87d76));
+                spanUtils = spanUtils.append(isNewPost).setForegroundColor(view.getResources().getColor(R.color.color_f87d76));
                 //tv_post_list_title.setText(line + postListEntry.getPost_title() + " " + isNewPost);
                 tv_post_list_title.setText(spanUtils.create());
                 tv_post_last_time.setText(postListEntry.getLast_time());
+                tv_post_last_user.setText(postListEntry.getLast_user());
                 tv_post_reply_read.setText(postListEntry.getReply_count());
             }
 

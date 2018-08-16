@@ -79,6 +79,7 @@ public class MySubwayListAdapter extends RecyclerView.Adapter<MySubwayListAdapte
         private TextView tv_subway_desc;
         private TextView tv_subway_moderator;
         private TextView tv_subway_last_time;
+        private TextView tv_subway_last_user;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -90,6 +91,7 @@ public class MySubwayListAdapter extends RecyclerView.Adapter<MySubwayListAdapte
             tv_subway_desc = (TextView) itemView.findViewById(R.id.tv_subway_desc);
             tv_subway_moderator = (TextView) itemView.findViewById(R.id.tv_subway_moderator);
             tv_subway_last_time = (TextView) itemView.findViewById(R.id.tv_subway_last_time);
+            tv_subway_last_user = (TextView) itemView.findViewById(R.id.tv_subway_last_user);
         }
 
         public void setData(final int position) throws Exception {
@@ -98,11 +100,12 @@ public class MySubwayListAdapter extends RecyclerView.Adapter<MySubwayListAdapte
             if (subwayListEntry != null) {
                 Glide.with(view.getContext()).load(subwayListEntry.getSubway_icon()).into(iv_subway_icon);
                 SpanUtils spanUtils = new SpanUtils();
-                spanUtils.append(subwayListEntry.getSubway_name()).append(subwayListEntry.getToday_post())
+                spanUtils = spanUtils.append(subwayListEntry.getSubway_name()).append(subwayListEntry.getToday_post())
                         .setForegroundColor(view.getResources().getColor(R.color.color_f87d76));
                 tv_subway_name.setText(spanUtils.create());
                 tv_subway_count.setText(subwayListEntry.getPost_count());
                 tv_subway_desc.setText(subwayListEntry.getSubway_desc());
+
                 List<SubwayListEntry.Moderator> moderatorList = subwayListEntry.getModerators(); //版主
                 if (moderatorList != null) {
                     StringBuilder sb = new StringBuilder();
@@ -113,9 +116,10 @@ public class MySubwayListAdapter extends RecyclerView.Adapter<MySubwayListAdapte
                             sb.append(",");
                         }
                     }
-                    tv_subway_moderator.setText("版主：" + sb.toString());
+                    tv_subway_moderator.setText(sb.toString());
                 }
                 tv_subway_last_time.setText(subwayListEntry.getLast_time());
+                tv_subway_last_user.setText(subwayListEntry.getLast_user());
             }
 
             view.setOnClickListener(new View.OnClickListener() {

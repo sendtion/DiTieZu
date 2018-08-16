@@ -2,8 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal"
     android:background="?attr/selectableItemBackground"
+    android:orientation="horizontal"
     android:padding="10dp">
 
     <ImageView
@@ -26,10 +26,10 @@
                 android:id="@+id/tv_subway_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textStyle="bold"
                 android:text="北京区(190)"
                 android:textColor="@color/color_6"
-                android:textSize="14sp" />
+                android:textSize="14sp"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/tv_subway_count"
@@ -58,25 +58,57 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp">
 
-            <TextView
-                android:id="@+id/tv_subway_moderator"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
-                android:layout_toLeftOf="@+id/tv_subway_last_time"
-                android:text="版主: hat600, changeup"
-                android:textColor="@color/color_a"
-                android:textSize="12sp" />
+                android:layout_alignParentStart="true"
+                android:layout_toLeftOf="@+id/layout_right"
+                android:layout_toStartOf="@+id/layout_right">
 
-            <TextView
-                android:id="@+id/tv_subway_last_time"
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="版主："
+                    android:textColor="@color/color_a"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/tv_subway_moderator"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:text="hat600, changeup"
+                    android:textColor="#99a7df"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layout_right"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
-                android:layout_alignParentRight="true"
-                android:text="1 分钟前 北京地铁九号线"
-                android:textColor="@color/color_a"
-                android:textSize="12sp" />
+                android:layout_alignParentRight="true">
+
+                <TextView
+                    android:id="@+id/tv_subway_last_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="5dp"
+                    android:layout_marginRight="5dp"
+                    android:text="1 分钟前"
+                    android:textColor="@color/color_a"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/tv_subway_last_user"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="地铁九号线"
+                    android:textColor="#DAAADB"
+                    android:textSize="12sp" />
+            </LinearLayout>
         </RelativeLayout>
     </LinearLayout>
 </LinearLayout>

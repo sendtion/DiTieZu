@@ -1,4 +1,4 @@
-package com.sendtion.ditiezu;
+package com.sendtion.ditiezu.ui;
 
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
@@ -13,6 +13,7 @@ import android.view.MenuItem;
 import com.amnix.adblockwebview.ui.AdBlocksWebViewActivity;
 import com.jcodecraeer.xrecyclerview.ProgressStyle;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
+import com.sendtion.ditiezu.R;
 import com.sendtion.ditiezu.adapter.MyPostListAdapter;
 import com.sendtion.ditiezu.entry.PostListEntry;
 import com.sendtion.ditiezu.util.JsoupUtil;

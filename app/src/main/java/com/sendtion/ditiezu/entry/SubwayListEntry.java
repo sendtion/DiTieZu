@@ -19,7 +19,8 @@ public class SubwayListEntry implements Serializable {
     private List<Moderator> moderators;
     private String post_count;
     private String last_post;
-    private String last_time;
+    private String last_time; //友好时间
+    private String last_time2; //实际时间
     private String last_user;
 
     public String getSubway_icon() {
@@ -92,6 +93,14 @@ public class SubwayListEntry implements Serializable {
 
     public void setLast_time(String last_time) {
         this.last_time = last_time;
+    }
+
+    public String getLast_time2() {
+        return last_time2;
+    }
+
+    public void setLast_time2(String last_time2) {
+        this.last_time2 = last_time2;
     }
 
     public String getLast_user() {

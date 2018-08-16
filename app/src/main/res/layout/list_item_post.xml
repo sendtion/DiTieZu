@@ -21,13 +21,30 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp">
 
-        <TextView
-            android:id="@+id/tv_post_last_time"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="zhxinxi / 半小时前"
-            android:textColor="@color/color_b"
-            android:textSize="12sp" />
+            android:layout_toLeftOf="@+id/tv_post_reply_read"
+            android:layout_toStartOf="@+id/tv_post_reply_read">
+
+            <TextView
+                android:id="@+id/tv_post_last_user"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="zhxinxi"
+                android:textColor="#DAAADB"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/tv_post_last_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
+                android:text="半小时前"
+                android:textColor="@color/color_a"
+                android:textSize="12sp" />
+        </LinearLayout>
 
         <TextView
             android:id="@+id/tv_post_reply_read"

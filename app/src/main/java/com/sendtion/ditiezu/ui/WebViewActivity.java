@@ -1,4 +1,4 @@
-package com.sendtion.ditiezu;
+package com.sendtion.ditiezu.ui;
 
 import android.content.Context;
 import android.content.Intent;
@@ -23,6 +23,7 @@ import com.prim.primweb.core.PrimWeb;
 import com.prim.primweb.core.webclient.webchromeclient.AgentChromeClient;
 import com.prim.primweb.core.webclient.webviewclient.AgentWebViewClient;
 import com.prim.primweb.core.webview.IAgentWebView;
+import com.sendtion.ditiezu.R;
 import com.sendtion.ditiezu.util.ADFilterTool;
 
 import butterknife.BindView;
