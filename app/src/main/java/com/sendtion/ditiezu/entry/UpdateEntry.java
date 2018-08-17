@@ -9,17 +9,18 @@ import java.io.Serializable;
  */
 
 public class UpdateEntry implements Serializable {
-    private long version_code;
+    private int version_code;
     private String version_name;
     private long apk_size;
     private String apk_url;
     private String update_log;
+    private boolean is_forced;
 
-    public long getVersion_code() {
+    public int getVersion_code() {
         return version_code;
     }
 
-    public void setVersion_code(long version_code) {
+    public void setVersion_code(int version_code) {
         this.version_code = version_code;
     }
 
@@ -53,5 +54,13 @@ public class UpdateEntry implements Serializable {
 
     public void setUpdate_log(String update_log) {
         this.update_log = update_log;
+    }
+
+    public boolean is_forced() {
+        return is_forced;
+    }
+
+    public void setIs_forced(boolean is_forced) {
+        this.is_forced = is_forced;
     }
 }

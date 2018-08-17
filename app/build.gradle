@@ -2,21 +2,102 @@ apply plugin: 'com.android.application'
 apply plugin: 'com.jakewharton.butterknife'
 
 android {
-    compileSdkVersion 26
-    buildToolsVersion "27.0.3"
+    compileSdkVersion Integer.parseInt(project.COMPILE_SDK_VERSION)
+    buildToolsVersion project.BUILD_TOOLS_VERSION
+
     defaultConfig {
         applicationId "com.sendtion.ditiezu"
-        minSdkVersion 16
-        targetSdkVersion 26
-        versionCode 3
-        versionName "1.2"
+        minSdkVersion Integer.parseInt(project.MIN_SDK_VERSION)
+        targetSdkVersion Integer.parseInt(project.TARGET_SDK_VERSION)
+        versionCode Integer.parseInt(project.VERSION_CODE)
+        versionName project.VERSION_NAME
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
-    buildTypes {
+
+    //签名配置
+    signingConfigs {
         release {
+            storeFile file(project.STORE_FILE)
+            storePassword project.STORE_PASSWORD
+            keyAlias project.KEY_ALIAS
+            keyPassword project.KEY_PASSWORD
+        }
+        debug {
+            storeFile file(project.STORE_FILE)
+            storePassword project.STORE_PASSWORD
+            keyAlias project.KEY_ALIAS
+            keyPassword project.KEY_PASSWORD
+        }
+    }
+
+    buildTypes {
+        debug {
+            //buildConfigField "String", "BMOB_APP_ID", "\"${BMOB_APP_ID}\""
+            buildConfigField "boolean", "LOG_DEBUG", "true"  //显示log
+            //resValue "String", "group_name_all", "${GROUP_NAME_ALL}"//可以直接在xml中引用资源文件
+            versionNameSuffix "-debug"  //版本号加上debug
             minifyEnabled false
+            shrinkResources false
+            signingConfig signingConfigs.debug //签名
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+        release {
+            //buildConfigField "String", "BMOB_APP_ID", "\"${BMOB_APP_ID}\""
+            buildConfigField "boolean", "LOG_DEBUG", "false" //不显示log
+            //resValue "String", "group_name_all", "${GROUP_NAME_ALL}"//可以直接在xml中引用资源文件
+            minifyEnabled false//混淆打包
+            zipAlignEnabled true //Zipalign优化
+            shrinkResources false//去掉不用资源
+            signingConfig signingConfigs.release //签名
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            //定义输入apk格式
+            applicationVariants.all { variant ->
+                variant.outputs.each { output ->
+                    def outputFile = output.outputFile
+                    if (outputFile != null && outputFile.name.endsWith('.apk')) {
+                        // 输出apk名称为app_v1.0_2015-xx-xx_xxxx.apk
+                        //def fileName = "app_v${defaultConfig.versionName}_${releaseTime()}.apk"
+                        def fileName = "ditiezu_${defaultConfig.versionName}_${defaultConfig.versionCode}_${variant.productFlavors[0].name}.apk"
+                        //def fileName = "时光笔记_v${defaultConfig.versionName}.apk"
+                        output.outputFile = new File(outputFile.parent, fileName)
+                    }
+                }
+            }
+        }
+    }
+
+    //这个是解决lint报错的代码
+    lintOptions {
+        abortOnError false
+        // 防止在发布的时候出现因MissingTranslation导致Build Failed!
+        disable 'MissingTranslation'
+    }
+
+    productFlavors {
+        qq {}
+//        firm {}
+//        xiaomi {}
+//        huawei {}
+//        baidu {}
+//        _91 {}
+//        anzhuo {}
+//        anzhi {}
+//        yingyongbao {}
+//        meizu {}
+//        ku_an {}
+//        _360 {}
+
+//        chuizi {}
+//        leyuan {}
+//        google {}
+//        lenovo {}
+//        oppo {}
+//        vivo {}
+//        yingyonghui {}
+    }
+
+    productFlavors.all {
+        flavor -> flavor.manifestPlaceholders = [CHANNEL_VALUE: name]
     }
 }
 
@@ -25,7 +106,6 @@ dependencies {
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    compile project(':primweb-core')
     compile project(':adblockwebview')
 
     compile 'com.android.support:appcompat-v7:26.+'
@@ -52,4 +132,5 @@ dependencies {
 
     compile 'com.lzy.net:okgo:3.0.4'
     compile group: 'com.google.code.gson', name: 'gson', version: '2.8.5'
+    compile "com.github.yjfnypeu:UpdatePlugin:3.1.0"
 }

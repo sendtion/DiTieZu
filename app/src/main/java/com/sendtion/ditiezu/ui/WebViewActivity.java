@@ -8,10 +8,6 @@ import android.os.Bundle;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.ActionBar;
 import android.util.Log;
-import android.view.KeyEvent;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
 import android.webkit.WebChromeClient;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebResourceResponse;
@@ -19,10 +15,6 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.RelativeLayout;
 
-import com.prim.primweb.core.PrimWeb;
-import com.prim.primweb.core.webclient.webchromeclient.AgentChromeClient;
-import com.prim.primweb.core.webclient.webviewclient.AgentWebViewClient;
-import com.prim.primweb.core.webview.IAgentWebView;
 import com.sendtion.ditiezu.R;
 import com.sendtion.ditiezu.util.ADFilterTool;
 
@@ -40,7 +32,7 @@ public class WebViewActivity extends BaseActivity {
     @BindView(R.id.layout_web)
     RelativeLayout layoutWeb;
 
-    private PrimWeb primWeb;
+    //private PrimWeb primWeb;
 
     ActionBar actionBar;
 
@@ -67,81 +59,81 @@ public class WebViewActivity extends BaseActivity {
             String post_url = intent.getStringExtra("post_url");
             Log.e(TAG, "post_url: " + post_url );
 
-            primWeb = PrimWeb.with(this)
-                    .setWebParent(layoutWeb, new ViewGroup.LayoutParams(
-                            ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT))
-                    .useDefaultUI()
-                    .useDefaultTopIndicator()
-                    .setWebViewType(PrimWeb.WebViewType.X5)
-                    .setWebChromeClient(agentChromeClient)
-                    .setWebViewClient(webViewClient)
-                    .alwaysOpenOtherPage(false)
-                    .buildWeb()
-                    .lastGo()
-                    .launch(post_url);
+//            primWeb = PrimWeb.with(this)
+//                    .setWebParent(layoutWeb, new ViewGroup.LayoutParams(
+//                            ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT))
+//                    .useDefaultUI()
+//                    .useDefaultTopIndicator()
+//                    .setWebViewType(PrimWeb.WebViewType.X5)
+//                    .setWebChromeClient(agentChromeClient)
+//                    .setWebViewClient(webViewClient)
+//                    .alwaysOpenOtherPage(false)
+//                    .buildWeb()
+//                    .lastGo()
+//                    .launch(post_url);
         }
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
-            case android.R.id.home:
-                if (!primWeb.handlerBack()) {
-                    this.finish();
-                }
-                break;
-        }
-        return super.onOptionsItemSelected(item);
-    }
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//        switch (item.getItemId()){
+//            case android.R.id.home:
+//                if (!primWeb.handlerBack()) {
+//                    this.finish();
+//                }
+//                break;
+//        }
+//        return super.onOptionsItemSelected(item);
+//    }
+//
+//    @Override
+//    public void onResume() {
+//        super.onResume();
+//        primWeb.webLifeCycle().onResume();
+//    }
+//
+//    @Override
+//    public void onPause() {
+//        super.onPause();
+//        primWeb.webLifeCycle().onPause();
+//    }
+//
+//    @Override
+//    protected void onDestroy() {
+//        super.onDestroy();
+//        primWeb.webLifeCycle().onDestory();
+//    }
+//
+//    @Override
+//    public boolean onKeyDown(int keyCode, KeyEvent event) {
+//        if (primWeb.handlerKeyEvent(keyCode, event)) {
+//            return true;
+//        }
+//        return super.onKeyDown(keyCode, event);
+//    }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        primWeb.webLifeCycle().onResume();
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        primWeb.webLifeCycle().onPause();
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        primWeb.webLifeCycle().onDestory();
-    }
-
-    @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (primWeb.handlerKeyEvent(keyCode, event)) {
-            return true;
-        }
-        return super.onKeyDown(keyCode, event);
-    }
-
-    AgentWebViewClient agentWebViewClient = new AgentWebViewClient() {
-        @Override
-        public boolean shouldOverrideUrlLoading(IAgentWebView view, String url) {
-            Log.e(TAG, "shouldOverrideUrlLoading: " + url);
-            return super.shouldOverrideUrlLoading(view, url);
-        }
-
-        @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-        @Override
-        public boolean shouldOverrideUrlLoading(IAgentWebView view, WebResourceRequest request) {
-            Log.e(TAG, "shouldOverrideUrlLoading: WebResourceRequest -->　" + request.getUrl());
-            return super.shouldOverrideUrlLoading(view, request);
-        }
-
-        @Override
-        public void onPageFinished(IAgentWebView view, String url) {
-            super.onPageFinished(view, url);
-            String js = getClearAdDivJs(WebViewActivity.this);
-            Log.e("adJs", js);
-            view.loadAgentUrl(js);
-        }
-    };
+//    AgentWebViewClient agentWebViewClient = new AgentWebViewClient() {
+//        @Override
+//        public boolean shouldOverrideUrlLoading(IAgentWebView view, String url) {
+//            Log.e(TAG, "shouldOverrideUrlLoading: " + url);
+//            return super.shouldOverrideUrlLoading(view, url);
+//        }
+//
+//        @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+//        @Override
+//        public boolean shouldOverrideUrlLoading(IAgentWebView view, WebResourceRequest request) {
+//            Log.e(TAG, "shouldOverrideUrlLoading: WebResourceRequest -->　" + request.getUrl());
+//            return super.shouldOverrideUrlLoading(view, request);
+//        }
+//
+//        @Override
+//        public void onPageFinished(IAgentWebView view, String url) {
+//            super.onPageFinished(view, url);
+//            String js = getClearAdDivJs(WebViewActivity.this);
+//            Log.e("adJs", js);
+//            view.loadAgentUrl(js);
+//        }
+//    };
 
     WebViewClient webViewClient = new WebViewClient() {
         @Override
@@ -191,30 +183,30 @@ public class WebViewActivity extends BaseActivity {
         return js;
     }
 
-    com.tencent.smtt.sdk.WebViewClient x5WebViewClient = new com.tencent.smtt.sdk.WebViewClient() {
-        @Override
-        public boolean shouldOverrideUrlLoading(com.tencent.smtt.sdk.WebView webView, String s) {
-            Log.e(TAG, "shouldOverrideUrlLoading: x5 --> " + s);
-            return super.shouldOverrideUrlLoading(webView, s);
-        }
-
-        @Override
-        public boolean shouldOverrideUrlLoading(com.tencent.smtt.sdk.WebView webView, com.tencent.smtt.export.external.interfaces.WebResourceRequest webResourceRequest) {
-            Log.e(TAG, "shouldOverrideUrlLoading: x5 webResourceRequest --> " + webResourceRequest.getUrl());
-            return super.shouldOverrideUrlLoading(webView, webResourceRequest);
-        }
-
-        @Override
-        public com.tencent.smtt.export.external.interfaces.WebResourceResponse shouldInterceptRequest(com.tencent.smtt.sdk.WebView webView, String url) {
-            //做广告拦截，ADFIlterTool 为广告拦截工具类
-            if (!ADFilterTool.hasAd(webView.getContext(),url)){
-                return super.shouldInterceptRequest(webView, url);
-            }else {
-                return new com.tencent.smtt.export.external.interfaces.WebResourceResponse(null, null, null);
-            }
-        }
-
-    };
+//    com.tencent.smtt.sdk.WebViewClient x5WebViewClient = new com.tencent.smtt.sdk.WebViewClient() {
+//        @Override
+//        public boolean shouldOverrideUrlLoading(com.tencent.smtt.sdk.WebView webView, String s) {
+//            Log.e(TAG, "shouldOverrideUrlLoading: x5 --> " + s);
+//            return super.shouldOverrideUrlLoading(webView, s);
+//        }
+//
+//        @Override
+//        public boolean shouldOverrideUrlLoading(com.tencent.smtt.sdk.WebView webView, com.tencent.smtt.export.external.interfaces.WebResourceRequest webResourceRequest) {
+//            Log.e(TAG, "shouldOverrideUrlLoading: x5 webResourceRequest --> " + webResourceRequest.getUrl());
+//            return super.shouldOverrideUrlLoading(webView, webResourceRequest);
+//        }
+//
+//        @Override
+//        public com.tencent.smtt.export.external.interfaces.WebResourceResponse shouldInterceptRequest(com.tencent.smtt.sdk.WebView webView, String url) {
+//            //做广告拦截，ADFIlterTool 为广告拦截工具类
+//            if (!ADFilterTool.hasAd(webView.getContext(),url)){
+//                return super.shouldInterceptRequest(webView, url);
+//            }else {
+//                return new com.tencent.smtt.export.external.interfaces.WebResourceResponse(null, null, null);
+//            }
+//        }
+//
+//    };
 
     WebChromeClient webChromeClient = new WebChromeClient() {
         @Override
@@ -226,13 +218,13 @@ public class WebViewActivity extends BaseActivity {
         }
     };
 
-    AgentChromeClient agentChromeClient = new AgentChromeClient() {
-        @Override
-        public void onReceivedTitle(View webView, String s) {
-            super.onReceivedTitle(webView, s);
-            if (actionBar != null) {
-                actionBar.setTitle(s);
-            }
-        }
-    };
+//    AgentChromeClient agentChromeClient = new AgentChromeClient() {
+//        @Override
+//        public void onReceivedTitle(View webView, String s) {
+//            super.onReceivedTitle(webView, s);
+//            if (actionBar != null) {
+//                actionBar.setTitle(s);
+//            }
+//        }
+//    };
 }

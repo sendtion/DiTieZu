@@ -106,11 +106,11 @@ public class PostListActivity extends BaseActivity implements XRecyclerView.Load
         mAdapter.setOnItemLongClickListener(new MyPostListAdapter.OnItemLongClickListener() {
             @Override
             public void onItemLongClick(int position) {
-                PostListEntry postListEntry = mDatas.get(position);
-
-                Intent intent = new Intent(PostListActivity.this, WebViewActivity.class);
-                intent.putExtra("post_url", postListEntry.getPost_url());
-                startActivity(intent);
+//                PostListEntry postListEntry = mDatas.get(position);
+//
+//                Intent intent = new Intent(PostListActivity.this, WebViewActivity.class);
+//                intent.putExtra("post_url", postListEntry.getPost_url());
+//                startActivity(intent);
             }
         });
 

@@ -23,7 +23,7 @@
             android:value="5b724919f29d980b0d000057" />
         <meta-data
             android:name="UMENG_CHANNEL"
-            android:value="bmob" />
+            android:value="${CHANNEL_VALUE}" />
 
         <activity android:name=".ui.MainActivity">
             <intent-filter>

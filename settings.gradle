@@ -1,1 +1,1 @@
-include ':app', ':primweb-core', ':adblockwebview'
+include ':app', ':adblockwebview'

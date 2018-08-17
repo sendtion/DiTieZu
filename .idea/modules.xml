@@ -5,7 +5,6 @@
       <module fileurl="file://$PROJECT_DIR$/DiTieZu.iml" filepath="$PROJECT_DIR$/DiTieZu.iml" />
       <module fileurl="file://$PROJECT_DIR$/adblockwebview/adblockwebview.iml" filepath="$PROJECT_DIR$/adblockwebview/adblockwebview.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/primweb-core/primweb-core.iml" filepath="$PROJECT_DIR$/primweb-core/primweb-core.iml" />
     </modules>
   </component>
 </project>
