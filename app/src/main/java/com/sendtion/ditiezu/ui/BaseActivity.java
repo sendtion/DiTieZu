@@ -1,11 +1,16 @@
 package com.sendtion.ditiezu.ui;
 
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 
+import com.sendtion.ditiezu.util.AppManager;
 import com.umeng.analytics.MobclickAgent;
+
+import org.greenrobot.eventbus.EventBus;
+
+import butterknife.ButterKnife;
 
 /**
  * Description:
@@ -13,11 +18,40 @@ import com.umeng.analytics.MobclickAgent;
  * Author: ShengDecheng
  */
 
-public class BaseActivity extends AppCompatActivity {
+public abstract class BaseActivity extends AppCompatActivity {
 
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState, @Nullable PersistableBundle persistentState) {
-        super.onCreate(savedInstanceState, persistentState);
+    public void onCreate(@Nullable Bundle savedInstanceState, @Nullable int resourceId) {
+        super.onCreate(savedInstanceState);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        setContentView(resourceId);
+
+        initActivity();
+        initView();
+        initData();
+        loadData();
+    }
+
+    protected abstract void initView();
+
+    protected void initData() {
+    }
+
+    protected void loadData() {
+    }
+
+    private void initActivity() {
+        // 添加Activity到堆栈
+        AppManager.getAppManager().addActivity(this);
+        //初始化EventBus
+        if (isBindEventBus() && !EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().register(this);
+        }
+        //初始化ButterKnife
+        ButterKnife.bind(this);
+    }
+
+    protected boolean isBindEventBus() {
+        return false;
     }
 
     @Override
@@ -30,5 +64,17 @@ public class BaseActivity extends AppCompatActivity {
     public void onPause() {
         super.onPause();
         MobclickAgent.onPause(this);
+    }
+
+    @Override
+    protected void onDestroy() {
+        //解除对EventBus的绑定
+        if (EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().unregister(this);
+        }
+        // 结束Activity&从堆栈中移除
+        AppManager.getAppManager().finishActivity(this);
+        super.onDestroy();
+        System.gc();
     }
 }

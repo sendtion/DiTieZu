@@ -1,6 +1,7 @@
 package com.sendtion.ditiezu.adapter;
 
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -98,28 +99,31 @@ public class MySubwayListAdapter extends RecyclerView.Adapter<MySubwayListAdapte
             SubwayListEntry subwayListEntry = datas.get(position);
 
             if (subwayListEntry != null) {
-                Glide.with(view.getContext()).load(subwayListEntry.getSubway_icon()).into(iv_subway_icon);
-                SpanUtils spanUtils = new SpanUtils();
-                spanUtils = spanUtils.append(subwayListEntry.getSubway_name()).append(subwayListEntry.getToday_post())
-                        .setForegroundColor(view.getResources().getColor(R.color.color_f87d76));
-                tv_subway_name.setText(spanUtils.create());
-                tv_subway_count.setText(subwayListEntry.getPost_count());
-                tv_subway_desc.setText(subwayListEntry.getSubway_desc());
+                String subwayName = subwayListEntry.getSubway_name();
+                if (!TextUtils.isEmpty(subwayName)) {
+                    Glide.with(view.getContext()).load(subwayListEntry.getSubway_icon()).into(iv_subway_icon);
+                    SpanUtils spanUtils = new SpanUtils();
+                    spanUtils = spanUtils.append(subwayName).append(subwayListEntry.getToday_post())
+                            .setForegroundColor(view.getResources().getColor(R.color.color_f87d76));
+                    tv_subway_name.setText(spanUtils.create());
+                    tv_subway_count.setText(subwayListEntry.getPost_count());
+                    tv_subway_desc.setText(subwayListEntry.getSubway_desc());
 
-                List<SubwayListEntry.Moderator> moderatorList = subwayListEntry.getModerators(); //版主
-                if (moderatorList != null) {
-                    StringBuilder sb = new StringBuilder();
-                    for (int i = 0; i < moderatorList.size(); i++) {
-                        SubwayListEntry.Moderator moderator = moderatorList.get(i);
-                        sb.append(moderator.getName());
-                        if (i < moderatorList.size() - 1) {
-                            sb.append(",");
+                    List<SubwayListEntry.Moderator> moderatorList = subwayListEntry.getModerators(); //版主
+                    if (moderatorList != null) {
+                        StringBuilder sb = new StringBuilder();
+                        for (int i = 0; i < moderatorList.size(); i++) {
+                            SubwayListEntry.Moderator moderator = moderatorList.get(i);
+                            sb.append(moderator.getName());
+                            if (i < moderatorList.size() - 1) {
+                                sb.append(",");
+                            }
                         }
+                        tv_subway_moderator.setText(sb.toString());
                     }
-                    tv_subway_moderator.setText(sb.toString());
+                    tv_subway_last_time.setText(subwayListEntry.getLast_time());
+                    tv_subway_last_user.setText(subwayListEntry.getLast_user());
                 }
-                tv_subway_last_time.setText(subwayListEntry.getLast_time());
-                tv_subway_last_user.setText(subwayListEntry.getLast_user());
             }
 
             view.setOnClickListener(new View.OnClickListener() {

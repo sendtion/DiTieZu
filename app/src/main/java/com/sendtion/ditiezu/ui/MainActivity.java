@@ -20,7 +20,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 
 /**
  * 地铁族
@@ -40,21 +39,12 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        ButterKnife.bind(this);
+        super.onCreate(savedInstanceState, R.layout.activity_main);
 
-        initView();
-
-        // 首次刷新数据
-        swipeRefreshSubway.setRefreshing(true);
-        getSubwayListData();
-
-        // 检查更新
-        UpdateBuilder.create().check();
     }
 
-    private void initView(){
+    @Override
+    protected void initView(){
         mDatas = new ArrayList<>();
 
         setTitle("地铁族");
@@ -95,6 +85,16 @@ public class MainActivity extends BaseActivity {
                 getSubwayListData();
             }
         });
+    }
+
+    @Override
+    protected void initData() {
+        // 首次刷新数据
+        swipeRefreshSubway.setRefreshing(true);
+        getSubwayListData();
+
+        // 检查更新
+        UpdateBuilder.create().check();
     }
 
     private void getSubwayListData(){

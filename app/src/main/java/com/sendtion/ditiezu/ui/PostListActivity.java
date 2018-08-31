@@ -22,7 +22,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import es.dmoral.toasty.Toasty;
 
 public class PostListActivity extends BaseActivity implements XRecyclerView.LoadingListener {
@@ -42,19 +41,12 @@ public class PostListActivity extends BaseActivity implements XRecyclerView.Load
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_post_list);
-        ButterKnife.bind(this);
+        super.onCreate(savedInstanceState, R.layout.activity_post_list);
 
-        AdBlocksWebViewActivity.init(this); //Add this Line in Application OnCreate or Activity.
-
-        initView();
-
-        swipeRefreshPost.setRefreshing(true);
-        refreshPostListData();
     }
 
-    private void initView(){
+    @Override
+    protected void initView(){
 
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
@@ -120,6 +112,12 @@ public class PostListActivity extends BaseActivity implements XRecyclerView.Load
                 refreshPostListData();
             }
         });
+    }
+
+    @Override
+    protected void initData() {
+        swipeRefreshPost.setRefreshing(true);
+        refreshPostListData();
     }
 
     private void refreshPostListData(){

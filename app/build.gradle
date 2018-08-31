@@ -32,8 +32,9 @@ android {
 
     buildTypes {
         debug {
+            buildConfigField "boolean", "IS_DEBUG", "true"
             //buildConfigField "String", "BMOB_APP_ID", "\"${BMOB_APP_ID}\""
-            buildConfigField "boolean", "LOG_DEBUG", "true"  //显示log
+            buildConfigField "boolean", "IS_SHOW_LOG", "true"  //显示log
             //resValue "String", "group_name_all", "${GROUP_NAME_ALL}"//可以直接在xml中引用资源文件
             versionNameSuffix "-debug"  //版本号加上debug
             minifyEnabled false
@@ -42,8 +43,9 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
         release {
+            buildConfigField "boolean", "IS_DEBUG", "false"
             //buildConfigField "String", "BMOB_APP_ID", "\"${BMOB_APP_ID}\""
-            buildConfigField "boolean", "LOG_DEBUG", "false" //不显示log
+            buildConfigField "boolean", "IS_SHOW_LOG", "false" //不显示log
             //resValue "String", "group_name_all", "${GROUP_NAME_ALL}"//可以直接在xml中引用资源文件
             minifyEnabled false//混淆打包
             zipAlignEnabled true //Zipalign优化
@@ -132,5 +134,8 @@ dependencies {
 
     compile 'com.lzy.net:okgo:3.0.4'
     compile group: 'com.google.code.gson', name: 'gson', version: '2.8.5'
-    compile "com.github.yjfnypeu:UpdatePlugin:3.1.0"
+    compile 'com.squareup.okhttp3:logging-interceptor:3.5.0'
+
+    compile 'com.github.yjfnypeu:UpdatePlugin:3.1.0'
+    compile 'com.github.razerdp:BasePopup:1.9.4'
 }

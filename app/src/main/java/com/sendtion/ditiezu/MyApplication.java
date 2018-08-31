@@ -2,6 +2,7 @@ package com.sendtion.ditiezu;
 
 import android.app.Application;
 
+import com.amnix.adblockwebview.ui.AdBlocksWebViewActivity;
 import com.google.gson.Gson;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.cache.CacheEntity;
@@ -43,6 +44,8 @@ public class MyApplication extends Application {
         initYouMeng();
 
         initOkGo();
+
+        AdBlocksWebViewActivity.init(this); //Add this Line in Application OnCreate or Activity.
 
         //https://github.com/yjfnypeu/UpdatePlugin/wiki
         UpdateConfig.getConfig()

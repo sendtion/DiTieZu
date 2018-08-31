@@ -19,7 +19,6 @@ import com.sendtion.ditiezu.R;
 import com.sendtion.ditiezu.util.ADFilterTool;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 
 /**
  * 加载网页
@@ -38,10 +37,12 @@ public class WebViewActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_web_view);
-        ButterKnife.bind(this);
+        super.onCreate(savedInstanceState, R.layout.activity_web_view);
 
+    }
+
+    @Override
+    protected void initView() {
         actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
@@ -49,11 +50,10 @@ public class WebViewActivity extends BaseActivity {
             actionBar.setDisplayShowHomeEnabled(true);
             actionBar.setDisplayShowCustomEnabled(true);
         }
-
-        initData();
     }
 
-    private void initData() {
+    @Override
+    protected void initData() {
         Intent intent = getIntent();
         if (intent != null){
             String post_url = intent.getStringExtra("post_url");
