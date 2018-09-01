@@ -37,8 +37,8 @@ public class WebViewActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState, R.layout.activity_web_view);
-
+        super.onCreate(savedInstanceState);
+        onCreate(R.layout.activity_web_view);
     }
 
     @Override

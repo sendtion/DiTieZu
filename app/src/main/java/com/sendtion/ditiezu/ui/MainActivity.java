@@ -39,8 +39,8 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState, R.layout.activity_main);
-
+        super.onCreate(savedInstanceState);
+        onCreate(R.layout.activity_main);
     }
 
     @Override

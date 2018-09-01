@@ -41,8 +41,8 @@ public class PostListActivity extends BaseActivity implements XRecyclerView.Load
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState, R.layout.activity_post_list);
-
+        super.onCreate(savedInstanceState);
+        onCreate(R.layout.activity_post_list);
     }
 
     @Override
