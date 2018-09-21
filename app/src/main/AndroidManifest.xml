@@ -33,7 +33,9 @@
             </intent-filter>
         </activity>
         <activity android:name=".ui.PostListActivity" />
-        <activity android:name=".ui.WebViewActivity" />
+        <activity
+            android:name=".ui.WebViewActivity"
+            android:windowSoftInputMode="adjustResize" />
 
         <provider
             android:name="android.support.v4.content.FileProvider"
@@ -45,6 +47,6 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths" />
         </provider>
-</application>
+    </application>
 
 </manifest>

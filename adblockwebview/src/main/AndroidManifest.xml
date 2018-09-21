@@ -13,8 +13,9 @@
         android:supportsRtl="true">
         <activity
             android:name=".ui.AdBlocksWebViewActivity"
+            android:configChanges="orientation|screenSize"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
-            android:configChanges="orientation|screenSize" />
+            android:windowSoftInputMode="adjustResize" />
     </application>
 
 </manifest>
