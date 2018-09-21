@@ -22,8 +22,6 @@ public class JsoupUtil {
 
     /**
      * 解析地铁列表
-     * @param url
-     * @return
      */
     public static List<SubwayListEntry> getSubwayList(String url) {
         try {
@@ -135,8 +133,6 @@ public class JsoupUtil {
 
     /**
      * 解析帖子列表
-     * @param url
-     * @return
      */
     public static List<PostListEntry> getPostList(String url) {
         try {

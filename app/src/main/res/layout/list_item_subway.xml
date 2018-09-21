@@ -26,8 +26,18 @@
                 android:id="@+id/tv_subway_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="北京区(190)"
+                android:text="北京区"
                 android:textColor="@color/color_6"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tv_subway_today"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/tv_subway_name"
+                android:text="(0)"
+                android:textColor="@color/color_f87d76"
                 android:textSize="14sp"
                 android:textStyle="bold" />
 
@@ -37,7 +47,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
-                android:text="82344 / 2014336"
+                android:text="0 / 0"
                 android:textColor="@color/color_79"
                 android:textSize="13sp" />
         </RelativeLayout>
@@ -49,7 +59,7 @@
             android:layout_marginTop="5dp"
             android:ellipsize="end"
             android:maxLines="2"
-            android:text="地下通衢肇始燕，铁流暗涌古城垣。北畅南达东西贯，京都旧貌换新颜。"
+            android:text="暂无简介"
             android:textColor="@color/color_a"
             android:textSize="12sp" />
 
@@ -79,7 +89,7 @@
                     android:layout_height="wrap_content"
                     android:ellipsize="end"
                     android:maxLines="1"
-                    android:text="hat600, changeup"
+                    android:text="— —"
                     android:textColor="#99a7df"
                     android:textSize="12sp" />
             </LinearLayout>
@@ -105,7 +115,7 @@
                     android:id="@+id/tv_subway_last_user"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="地铁九号线"
+                    android:text="— —"
                     android:textColor="#DAAADB"
                     android:textSize="12sp" />
             </LinearLayout>

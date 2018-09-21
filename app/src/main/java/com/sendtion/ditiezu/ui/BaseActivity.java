@@ -1,5 +1,6 @@
 package com.sendtion.ditiezu.ui;
 
+import android.app.ProgressDialog;
 import android.content.pm.ActivityInfo;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -18,6 +19,7 @@ import butterknife.ButterKnife;
  */
 
 public abstract class BaseActivity extends AppCompatActivity {
+    private ProgressDialog loadingDialog;
 
     public void onCreate(@Nullable int resourceId) {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
@@ -50,6 +52,22 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     protected boolean isBindEventBus() {
         return false;
+    }
+
+    protected void showProgressDialog() {
+        if (loadingDialog == null) {
+            loadingDialog = new ProgressDialog(this);
+        }
+        loadingDialog.setCancelable(false);
+        if (!isFinishing()) {
+            loadingDialog.show();
+        }
+    }
+
+    protected void dismissProgressDialog() {
+        if (loadingDialog != null && loadingDialog.isShowing()) {
+            loadingDialog.dismiss();
+        }
     }
 
     @Override

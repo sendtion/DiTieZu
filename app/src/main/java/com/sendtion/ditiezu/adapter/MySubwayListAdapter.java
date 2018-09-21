@@ -11,7 +11,6 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.sendtion.ditiezu.R;
 import com.sendtion.ditiezu.entry.SubwayListEntry;
-import com.sendtion.ditiezu.util.SpanUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -76,6 +75,7 @@ public class MySubwayListAdapter extends RecyclerView.Adapter<MySubwayListAdapte
         private View view;
         private ImageView iv_subway_icon;
         private TextView tv_subway_name;
+        private TextView tv_subway_today;
         private TextView tv_subway_count;
         private TextView tv_subway_desc;
         private TextView tv_subway_moderator;
@@ -88,6 +88,7 @@ public class MySubwayListAdapter extends RecyclerView.Adapter<MySubwayListAdapte
 
             iv_subway_icon = (ImageView) itemView.findViewById(R.id.iv_subway_icon);
             tv_subway_name = (TextView) itemView.findViewById(R.id.tv_subway_name);
+            tv_subway_today = (TextView) itemView.findViewById(R.id.tv_subway_today);
             tv_subway_count = (TextView) itemView.findViewById(R.id.tv_subway_count);
             tv_subway_desc = (TextView) itemView.findViewById(R.id.tv_subway_desc);
             tv_subway_moderator = (TextView) itemView.findViewById(R.id.tv_subway_moderator);
@@ -101,16 +102,21 @@ public class MySubwayListAdapter extends RecyclerView.Adapter<MySubwayListAdapte
             if (subwayListEntry != null) {
                 String subwayName = subwayListEntry.getSubway_name();
                 if (!TextUtils.isEmpty(subwayName)) {
+                    //地铁logo
                     Glide.with(view.getContext()).load(subwayListEntry.getSubway_icon()).into(iv_subway_icon);
-                    SpanUtils spanUtils = new SpanUtils();
-                    spanUtils = spanUtils.append(subwayName).append(subwayListEntry.getToday_post())
-                            .setForegroundColor(view.getResources().getColor(R.color.color_f87d76));
-                    tv_subway_name.setText(spanUtils.create());
+                    //地铁名称
+                    tv_subway_name.setText(subwayName);
+                    //今日帖子
+                    tv_subway_today.setText(subwayListEntry.getToday_post());
+                    //帖子总量
                     tv_subway_count.setText(subwayListEntry.getPost_count());
+                    //地铁简介
                     tv_subway_desc.setText(subwayListEntry.getSubway_desc());
 
+                    //版主
+                    tv_subway_moderator.setText("— —");
                     List<SubwayListEntry.Moderator> moderatorList = subwayListEntry.getModerators(); //版主
-                    if (moderatorList != null) {
+                    if (moderatorList != null && moderatorList.size() > 0) {
                         StringBuilder sb = new StringBuilder();
                         for (int i = 0; i < moderatorList.size(); i++) {
                             SubwayListEntry.Moderator moderator = moderatorList.get(i);
@@ -121,7 +127,9 @@ public class MySubwayListAdapter extends RecyclerView.Adapter<MySubwayListAdapte
                         }
                         tv_subway_moderator.setText(sb.toString());
                     }
+                    //最后发表时间
                     tv_subway_last_time.setText(subwayListEntry.getLast_time());
+                    //最后发表人
                     tv_subway_last_user.setText(subwayListEntry.getLast_user());
                 }
             }

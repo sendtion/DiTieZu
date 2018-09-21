@@ -47,7 +47,11 @@ public class MyApplication extends Application {
 
         AdBlocksWebViewActivity.init(this); //Add this Line in Application OnCreate or Activity.
 
-        //https://github.com/yjfnypeu/UpdatePlugin/wiki
+        initUpdateApp();
+    }
+
+    //自动更新初始化 https://github.com/yjfnypeu/UpdatePlugin/wiki
+    private void initUpdateApp(){
         UpdateConfig.getConfig()
                 .setUrl(UPDATE_URL + "?v=2018")// 配置检查更新的API接口
                 .setUpdateParser(new UpdateParser() {
