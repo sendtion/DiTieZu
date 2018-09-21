@@ -34,6 +34,7 @@ import okhttp3.OkHttpClient;
 
 public class MyApplication extends Application {
 
+    //在线更新地址
     private static final String UPDATE_URL = "http://app.sendtion.cn/app/ditiezu/version.json";
 
     @Override
