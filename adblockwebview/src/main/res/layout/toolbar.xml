@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
     android:id="@+id/toolbar_root"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:background="#00000000"
-        android:layout_height="?attr/actionBarSize">
+        android:layout_height="?attr/actionBarSize"
+        android:background="#00000000">
 
         <android.support.v7.widget.AppCompatImageButton
             android:id="@+id/toolbar_btn_close"
@@ -36,26 +36,27 @@
                 android:layout_marginBottom="1.5dp"
                 android:layout_marginTop="1.5dp"
                 android:ellipsize="end"
-                android:textColor="#fff"
                 android:gravity="center"
                 android:includeFontPadding="false"
-                android:singleLine="true"
+                android:maxLines="1"
+                android:textColor="#fff"
                 android:textSize="18dp" />
 
             <TextView
                 android:id="@+id/toolbar_tv_url"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="#fff"
                 android:layout_marginBottom="1.5dp"
                 android:layout_marginTop="1.5dp"
                 android:ellipsize="end"
                 android:gravity="center"
                 android:includeFontPadding="false"
+                android:maxLines="1"
                 android:paddingLeft="2dp"
                 android:paddingRight="2dp"
-                android:singleLine="true"
-                android:textSize="14dp" />
+                android:textColor="#fff"
+                android:textSize="14dp"
+                android:visibility="gone" />
         </LinearLayout>
 
         <android.support.v7.widget.AppCompatImageButton
