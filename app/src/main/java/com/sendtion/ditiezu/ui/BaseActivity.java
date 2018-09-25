@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.pm.ActivityInfo;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.widget.Toast;
 
 import com.sendtion.ditiezu.util.AppManager;
 import com.umeng.analytics.MobclickAgent;
@@ -11,6 +12,7 @@ import com.umeng.analytics.MobclickAgent;
 import org.greenrobot.eventbus.EventBus;
 
 import butterknife.ButterKnife;
+import es.dmoral.toasty.Toasty;
 
 /**
  * Description:
@@ -68,6 +70,10 @@ public abstract class BaseActivity extends AppCompatActivity {
         if (loadingDialog != null && loadingDialog.isShowing()) {
             loadingDialog.dismiss();
         }
+    }
+
+    public void showToast(String text){
+        Toasty.normal(this, text, Toast.LENGTH_SHORT).show();
     }
 
     @Override

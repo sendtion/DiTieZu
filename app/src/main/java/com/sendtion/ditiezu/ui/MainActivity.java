@@ -65,17 +65,23 @@ public class MainActivity extends BaseActivity {
             public void onItemClick(int position) {
                 SubwayListEntry subwayListEntry = mDatas.get(position);
 
-                Intent intent = new Intent(MainActivity.this, PostListActivity.class);
-                intent.putExtra("subway_url", subwayListEntry.getSubway_url());
-                intent.putExtra("subway_name", subwayListEntry.getSubway_name()+subwayListEntry.getToday_post());
-                startActivity(intent);
+                if (subwayListEntry != null) {
+                    Intent intent = new Intent(MainActivity.this, PostListActivity.class);
+                    intent.putExtra("subway_url", subwayListEntry.getSubway_url());
+                    intent.putExtra("subway_name", subwayListEntry.getSubway_name()+subwayListEntry.getToday_post());
+                    startActivity(intent);
+                }
             }
         });
 
         mAdapter.setOnItemLongClickListener(new MySubwayListAdapter.OnItemLongClickListener() {
             @Override
             public void onItemLongClick(int position) {
-                //SubwayListEntry subwayListEntry = mDatas.get(position);
+                SubwayListEntry subwayListEntry = mDatas.get(position);
+
+                if (subwayListEntry != null) {
+                    showToast(subwayListEntry.getSubway_name());
+                }
             }
         });
 
