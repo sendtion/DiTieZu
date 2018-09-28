@@ -27,9 +27,12 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatImageButton;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.webkit.DownloadListener;
 import android.webkit.JsResult;
@@ -79,6 +82,8 @@ public class AdBlocksWebViewActivity extends AppCompatActivity implements WebVie
     // Toolbar
     private TextView mTvTitle;
     private TextView mTvUrl;
+
+    private Toolbar mToolbar;
 
     private CoordinatorLayout mCoordinatorLayout;
     private ProgressBar mProgressBar;
@@ -212,6 +217,18 @@ public class AdBlocksWebViewActivity extends AppCompatActivity implements WebVie
         mTvTitle = (TextView) findViewById(R.id.toolbar_tv_title);
         mTvUrl = (TextView) findViewById(R.id.toolbar_tv_url);
         findViewById(R.id.toolbar_root).setBackgroundColor(getIntent().getIntExtra(EXTRA_COLOR, Color.BLACK));
+
+        //使用Toolbar作为标题栏
+        mToolbar = (Toolbar) findViewById(R.id.toolbar_web_view);
+        mToolbar.setBackgroundColor(getIntent().getIntExtra(EXTRA_COLOR, Color.BLACK));
+        setSupportActionBar(mToolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mPresenter.onClick(view.getId(), mWebView.getUrl(), mPopupMenu);
+            }
+        });
 
         mCoordinatorLayout = (CoordinatorLayout) findViewById(R.id.a_web_viewer_coordinatorlayout);
         mProgressBar = (ProgressBar) findViewById(R.id.a_web_viewer_pb);
@@ -361,6 +378,7 @@ public class AdBlocksWebViewActivity extends AppCompatActivity implements WebVie
     @Override
     public void setToolbarTitle(String title) {
         mTvTitle.setText(title);
+        mToolbar.setTitle(title);
     }
 
     @Override
@@ -673,5 +691,22 @@ public class AdBlocksWebViewActivity extends AppCompatActivity implements WebVie
                         .show();
             }
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_web_view, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int i = item.getItemId();
+        if (i == R.id.action_refresh) {
+        } else if (i == R.id.action_copy_link) {
+        } else if (i == R.id.action_open_browser) {
+        } else if (i == R.id.action_share) {
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

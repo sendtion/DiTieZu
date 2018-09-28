@@ -2,10 +2,10 @@
     <string name="app_name">WebViewer</string>
 
     <!-- Menu -->
-    <string name="menu_refresh">Refresh</string>
-    <string name="menu_copy_link">Copy Link</string>
-    <string name="menu_open_with_other_browser">Open With Other Browser</string>
-    <string name="menu_share">Share</string>
+    <string name="menu_refresh">刷新</string>
+    <string name="menu_copy_link">复制链接</string>
+    <string name="menu_open_with_other_browser">从外部浏览器打开</string>
+    <string name="menu_share">分享</string>
 
     <!-- Message -->
     <string name="message_copy_to_clipboard">Copy To Clipboard</string>
