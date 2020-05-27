@@ -11,7 +11,7 @@ import java.io.Serializable;
 public class UpdateEntry implements Serializable {
     private int version_code;
     private String version_name;
-    private long apk_size;
+    private String apk_size;
     private String apk_url;
     private String update_log;
     private boolean is_forced;
@@ -32,11 +32,11 @@ public class UpdateEntry implements Serializable {
         this.version_name = version_name;
     }
 
-    public long getApk_size() {
+    public String getApk_size() {
         return apk_size;
     }
 
-    public void setApk_size(long apk_size) {
+    public void setApk_size(String apk_size) {
         this.apk_size = apk_size;
     }
 

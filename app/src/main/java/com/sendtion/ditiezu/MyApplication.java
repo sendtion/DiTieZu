@@ -3,7 +3,6 @@ package com.sendtion.ditiezu;
 import android.app.Application;
 
 import com.amnix.adblockwebview.ui.AdBlocksWebViewActivity;
-import com.google.gson.Gson;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.cache.CacheEntity;
 import com.lzy.okgo.cache.CacheMode;
@@ -12,14 +11,9 @@ import com.lzy.okgo.cookie.store.SPCookieStore;
 import com.lzy.okgo.interceptor.HttpLoggingInterceptor;
 import com.lzy.okgo.model.HttpHeaders;
 import com.lzy.okgo.model.HttpParams;
-import com.sendtion.ditiezu.entry.UpdateEntry;
 import com.sendtion.ditiezu.util.Utils;
 import com.umeng.analytics.MobclickAgent;
 import com.umeng.commonsdk.UMConfigure;
-
-import org.lzh.framework.updatepluginlib.UpdateConfig;
-import org.lzh.framework.updatepluginlib.base.UpdateParser;
-import org.lzh.framework.updatepluginlib.model.Update;
 
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
@@ -53,23 +47,23 @@ public class MyApplication extends Application {
 
     //自动更新初始化 https://github.com/yjfnypeu/UpdatePlugin/wiki
     private void initUpdateApp(){
-        UpdateConfig.getConfig()
-                .setUrl(UPDATE_URL + "?v=2018")// 配置检查更新的API接口
-                .setUpdateParser(new UpdateParser() {
-                    @Override
-                    public Update parse(String response) throws Exception {
-                        UpdateEntry updateEntry = new Gson().fromJson(response, UpdateEntry.class);
-                        // 在此对response数据进行解析，并创建出对应的update实体类数据，提供给框架内部进行使用
-                        Update update = new Update();
-                        update.setVersionCode(updateEntry.getVersion_code());
-                        update.setVersionName(updateEntry.getVersion_name());
-                        update.setUpdateUrl(updateEntry.getApk_url());
-                        update.setUpdateContent(updateEntry.getUpdate_log());
-                        update.setForced(updateEntry.is_forced());
-                        update.setIgnore(false);
-                        return update;
-                    }
-                });
+//        UpdateConfig.getConfig()
+//                .setUrl(UPDATE_URL + "?time="+System.currentTimeMillis())// 配置检查更新的API接口，time参数是刷新cdn缓存
+//                .setUpdateParser(new UpdateParser() {
+//                    @Override
+//                    public Update parse(String response) throws Exception {
+//                        UpdateEntry updateEntry = new Gson().fromJson(response, UpdateEntry.class);
+//                        // 在此对response数据进行解析，并创建出对应的update实体类数据，提供给框架内部进行使用
+//                        Update update = new Update();
+//                        update.setVersionCode(updateEntry.getVersion_code());
+//                        update.setVersionName(updateEntry.getVersion_name());
+//                        update.setUpdateUrl(updateEntry.getApk_url());
+//                        update.setUpdateContent(updateEntry.getUpdate_log());
+//                        update.setForced(updateEntry.is_forced());
+//                        update.setIgnore(false);
+//                        return update;
+//                    }
+//                });
     }
 
     private void initOkGo() {

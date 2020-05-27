@@ -152,3 +152,6 @@ public static final int *;
 #okserver
 -dontwarn com.lzy.okserver.**
 -keep class com.lzy.okserver.**{*;}
+
+-keep public class * extends android.app.Activity
+-keep public class * extends android.app.Service

@@ -3,7 +3,7 @@ package com.sendtion.ditiezu.util;
 import android.app.Activity;
 import android.app.ActivityManager;
 import android.content.Context;
-import android.support.annotation.AnimRes;
+import androidx.annotation.AnimRes;
 
 import java.util.Stack;
 

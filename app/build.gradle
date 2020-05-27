@@ -11,7 +11,14 @@ android {
         targetSdkVersion Integer.parseInt(project.TARGET_SDK_VERSION)
         versionCode Integer.parseInt(project.VERSION_CODE)
         versionName project.VERSION_NAME
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        flavorDimensions "versionCode"
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
 
     //签名配置
@@ -54,14 +61,14 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             //定义输入apk格式
             applicationVariants.all { variant ->
-                variant.outputs.each { output ->
+                variant.outputs.all { output ->
                     def outputFile = output.outputFile
                     if (outputFile != null && outputFile.name.endsWith('.apk')) {
                         // 输出apk名称为app_v1.0_2015-xx-xx_xxxx.apk
                         //def fileName = "app_v${defaultConfig.versionName}_${releaseTime()}.apk"
                         def fileName = "ditiezu_${defaultConfig.versionName}_${defaultConfig.versionCode}_${variant.productFlavors[0].name}.apk"
                         //def fileName = "时光笔记_v${defaultConfig.versionName}.apk"
-                        output.outputFile = new File(outputFile.parent, fileName)
+                        outputFileName = fileName
                     }
                 }
             }
@@ -77,25 +84,6 @@ android {
 
     productFlavors {
         qq {}
-//        firm {}
-//        xiaomi {}
-//        huawei {}
-//        baidu {}
-//        _91 {}
-//        anzhuo {}
-//        anzhi {}
-//        yingyongbao {}
-//        meizu {}
-//        ku_an {}
-//        _360 {}
-
-//        chuizi {}
-//        leyuan {}
-//        google {}
-//        lenovo {}
-//        oppo {}
-//        vivo {}
-//        yingyonghui {}
     }
 
     productFlavors.all {
@@ -104,38 +92,41 @@ android {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    androidTestImplementation('androidx.test.espresso:espresso-core:3.1.0', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    compile project(':adblockwebview')
+    implementation project(':adblockwebview')
 
-    compile 'com.android.support:appcompat-v7:26.+'
-    compile 'com.android.support:recyclerview-v7:26.+'
-    compile 'com.android.support.constraint:constraint-layout:1.0.2'
-    compile 'org.jsoup:jsoup:1.11.3'
-    compile 'org.greenrobot:eventbus:3.1.1'
-    compile 'com.jakewharton:butterknife:8.8.1'
-    compile 'com.github.bumptech.glide:glide:3.7.0'
-    testCompile 'junit:junit:4.12'
-    annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
+    implementation 'androidx.core:core:1.4.0-alpha01'
+    implementation 'com.google.android.material:material:1.2.0-alpha06'
+    implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.0.0"
+    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
+    testImplementation 'junit:junit:4.12'
+
+    implementation 'org.jsoup:jsoup:1.11.3'
+    implementation 'org.greenrobot:eventbus:3.1.1'
+    implementation 'com.jakewharton:butterknife:10.2.0'
+    implementation 'com.github.bumptech.glide:glide:3.7.0'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:10.2.0'
 
     //compile 'com.umeng.sdk:common:latest.integration'
     //compile 'com.umeng.sdk:analytics:latest.integration'
-    compile 'com.umeng.sdk:common:1.5.3'
-    compile 'com.umeng.sdk:analytics:7.5.3'
+    implementation 'com.umeng.sdk:common:1.5.3'
+    implementation 'com.umeng.sdk:analytics:7.5.3'
 
-    compile 'com.jcodecraeer:xrecyclerview:1.5.9'
-    compile 'com.github.GrenderG:Toasty:1.3.0'
+    implementation 'com.jcodecraeer:xrecyclerview:1.5.9'
+    implementation 'com.github.GrenderG:Toasty:1.4.2'
 
-    compile 'com.just.agentweb:agentweb:4.0.2' // (必选)
-    compile 'com.just.agentweb:download:4.0.2' // (可选)
-    compile 'com.just.agentweb:filechooser:4.0.2'// (可选)
+    implementation 'com.just.agentweb:agentweb:4.1.3' // (必选)
+    implementation 'com.just.agentweb:download:4.0.2' // (可选)
+    implementation 'com.just.agentweb:filechooser:4.1.3'// (可选)
 
-    compile 'com.lzy.net:okgo:3.0.4'
-    compile group: 'com.google.code.gson', name: 'gson', version: '2.8.5'
-    compile 'com.squareup.okhttp3:logging-interceptor:3.5.0'
+    implementation 'com.lzy.net:okgo:3.0.4'
+    implementation group: 'com.google.code.gson', name: 'gson', version: '2.8.6'
+    implementation 'com.squareup.okhttp3:logging-interceptor:3.5.0'
 
-    compile 'com.github.yjfnypeu:UpdatePlugin:3.1.0'
-    compile 'com.github.razerdp:BasePopup:1.9.4'
+    //implementation 'com.github.yjfnypeu:UpdatePlugin:3.1.0'
+    implementation 'com.azhon:appupdateX:2.9.0'
+    implementation 'com.github.razerdp:BasePopup:1.9.4'
 }
